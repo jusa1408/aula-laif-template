@@ -31,5 +31,8 @@ The page is plain HTML/CSS/JS. Outside claude.ai it has no database, so `templat
 - Message text is sent to the AI provider when it is read, like anything else you give an assistant.
 - Unofficial – not made or endorsed by Aula, KMD or Netcompany. Things can break when Aula changes.
 
+## License
+MIT – see `LICENSE`. aula-mcp has its own license; see its repo.
+
 ---
 Made by Julie Pardoe. Aula access by Casper Juel's aula-mcp.
