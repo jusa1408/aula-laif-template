@@ -17,7 +17,7 @@ const IC_SUN = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stro
 // ---------- family profile ----------
 // Who the page is about. The real page reads digest/profile from the database (written at setup); this is the fallback.
 // kids[]: name, id, institution, institutionName, type (nursery|kindergarten|school|sfo), group, lunchMenu, closes {weekday 0–6: "HH:MM"}
-const DEFAULT_PROFILE = {"kids": [], "family": {"timezone": "Europe/Copenhagen", "language": ["da", "en"]}, "ignore": [], "runs": ["09:00", "12:00", "17:00", "19:00"], "device": {"name": "the computer", "name_da": "computeren"}};
+const DEFAULT_PROFILE = {"kids": [], "family": {"timezone": "Europe/Copenhagen", "language": ["da", "en"]}, "ignore": [], "runs": ["10:00", "17:00"], "device": {"name": "the computer", "name_da": "computeren"}};
 let PROFILE = DEFAULT_PROFILE;
 let CONFIG = { kids:[], lunchKid:null, lunchKids:[], tripKid:null, hours:{}, aulaUrl:"https://www.aula.dk/portal/" };
 let KIDS = [];
@@ -536,7 +536,7 @@ document.addEventListener("click", async ev => {
   catch { if(mark) delete DONE[id]; else DONE[id] = was || true; renderActions(); }
 });
 // ---------- stale data ----------
-// run times come from the profile (runs: ["09:00","12:00",...]); "9, 12, 17 and 19" / "9, 12, 17 og 19"
+// run times come from the profile (runs: ["10:00","17:00"]); "10 and 17" / "10 og 17"
 const RUNS = () => (PROFILE.runs && PROFILE.runs.length ? PROFILE.runs : []).slice().sort();
 function runList(){
   const r = RUNS().map(h => h.endsWith(":00") ? String(+h.slice(0,2)) : h);
@@ -679,7 +679,7 @@ function renderSettings(){
   }).join("");
   // push: what the evening check sends (the task reads profile.notify)
   const nt = {evening:true, weekly:true, content:"all", ...(P.notify||{})};
-  const lastRun = (P.runs||[]).slice(-1)[0] || "19:00";
+  const lastRun = (P.runs||[]).slice(-1)[0] || "17:00";
   const pushCard = `<section class="scard">
     ${line("pEve", t("pEvening"), nt.evening ? t("yes") : t("no"), t("pEveningHelp")(lastRun), `<label class="switch"><input type="checkbox" data-notify="evening" aria-label="${esc(t("pEvening"))}"${nt.evening ? " checked" : ""}><span></span></label>`)}
     ${line("pWeek", t("pWeekly"), nt.weekly ? t("yes") : t("no"), t("pWeeklyHelp"), `<label class="switch"><input type="checkbox" data-notify="weekly" aria-label="${esc(t("pWeekly"))}"${nt.weekly ? " checked" : ""}><span></span></label>`)}

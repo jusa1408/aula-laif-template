@@ -1,6 +1,6 @@
 # Aula-Laif
 
-A calm daily overview of your children's [Aula](https://www.aula.dk) – today, the next school day, the week, lunch menu, pick-up, weather, packing list, messages, calendar and contacts – refreshed four times a day by a scheduled Claude task on your own Mac.
+A calm daily overview of your children's [Aula](https://www.aula.dk) – today, the next school day, the week, lunch menu, pick-up, weather, packing list, messages, calendar and contacts – refreshed twice a day by a scheduled Claude task on your own Mac.
 
 *En rolig daglig oversigt over jeres børns Aula. Dansk guide: se nedenfor.*
 
@@ -17,7 +17,7 @@ A calm daily overview of your children's [Aula](https://www.aula.dk) – today, 
 
 ## How it works
 1. **aula-mcp** runs on your Mac and logs in to Aula with your MitID (read-only).
-2. A **scheduled Claude task** (09, 12, 17, 19) reads Aula through it and writes a summary into the page's database. Everything about your family lives in one profile document there – nothing family-specific is in the code or the prompt.
+2. A **scheduled Claude task** (10:00 and 17:00) reads Aula through it and writes a summary into the page's database. Everything about your family lives in one profile document there – nothing family-specific is in the code or the prompt.
 3. **The page** is a private Claude artifact that renders that data, in Danish or English, mobile first.
 
 The easiest setup is the guide: it ends with one message you paste into Claude, which builds your page from the template and creates the task.
