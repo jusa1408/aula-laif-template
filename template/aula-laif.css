@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@300&display=swap");
 /* Layout: shadcn-style stack of bordered cards on a zinc ground — Today, next school day, the week as rows, Later, Menu, an accordion. */
 :root{
   --background:#f3f5f9; --seg:#e6e9ef; --card:#ffffff; --foreground:#09090b; --muted:#f4f4f5; --muted-fg:#66666e;
@@ -730,3 +731,52 @@ footer p.credit{order:9;margin-top:-8px}
   h1{font-size:36px}
 }
 @media (prefers-reduced-motion:reduce){.icon-btn svg{transition:none}.group-btn svg{transition:none}details.acc summary svg,details.card > summary svg{transition:none}}
+/* ===== Look v2 (23/11): warm and calm, inspired by bankmcp.dk – cream ground, hairlines, no shadows, light type, pill controls ===== */
+:root{
+  --background:#f5f2ec; --seg:#ece8e0; --card:#faf8f4; --elev:#fdfcf9; --foreground:#1a1a1a; --muted:#efebe3; --muted-fg:#63625d;
+  --border:#e0ddd6; --border-strong:#c5c2bb; --input:#8f8b83; --primary:#1a1a1a; --primary-fg:#f5f5f3; --ring:#1a1a1a;
+  --ok:#3d7a4f; --accent:#b4532a; --shadow:none; --shadow-md:none; --shadow-lg:none;
+  --both-bg:#efebe3; --both-fg:#3f3d39; --both-bd:#d6d2ca; --act-bg:#f7efe3; --act-bd:#e6d6bf;
+  --r:10px; --r-sm:8px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --background:#141413; --seg:#262421; --card:#1a1918; --elev:#211f1d; --foreground:#f2efe8; --muted:#24221f; --muted-fg:#a19e97;
+  --border:#2c2a26; --border-strong:#45413b; --input:#6e6a63; --primary:#f2efe8; --primary-fg:#1a1a1a; --ring:#d6d2ca;
+  --ok:#7cc596; --accent:#e08a5f; --shadow:none; --shadow-md:none; --shadow-lg:none;
+  --both-bg:#262421; --both-fg:#e6e2da; --both-bd:#3d3a35; --act-bg:#1f1a14; --act-bd:#3d3225}}
+:root[data-theme="dark"]{
+  --background:#141413; --seg:#262421; --card:#1a1918; --elev:#211f1d; --foreground:#f2efe8; --muted:#24221f; --muted-fg:#a19e97;
+  --border:#2c2a26; --border-strong:#45413b; --input:#6e6a63; --primary:#f2efe8; --primary-fg:#1a1a1a; --ring:#d6d2ca;
+  --ok:#7cc596; --accent:#e08a5f; --shadow:none; --shadow-md:none; --shadow-lg:none;
+  --both-bg:#262421; --both-fg:#e6e2da; --both-bd:#3d3a35; --act-bg:#1f1a14; --act-bd:#3d3225}
+body{font-weight:400;letter-spacing:-.005em}
+/* titles: large and light, tight tracking */
+h1{font-weight:400;font-size:clamp(36px,9vw,48px);line-height:1.04;letter-spacing:-.045em}
+.subtitle{font-weight:300;font-size:16px;margin-top:6px}
+.card-t{font-weight:500;font-size:18px;letter-spacing:-.02em}
+.card.primary .card-t{font-size:22px;letter-spacing:-.03em}
+.card-d{font-weight:300}
+.stamp{font-weight:300}
+/* cards: hairline, no shadow; the main card is lifted only by a stronger line */
+.card{box-shadow:none}
+.card.primary{border-width:1px;border-color:var(--border-strong);background:var(--elev);box-shadow:none}
+.card.raised{box-shadow:none}
+/* section labels: small, wide-tracked eyebrow */
+.group{font-weight:500;font-size:11px;letter-spacing:.14em;margin-top:28px}
+.group::after{background:var(--border)}
+/* top tabs: quieter */
+.viewnav a{font-weight:400}
+.viewnav a[aria-current="page"]{font-weight:500;border-bottom-width:1.5px}
+/* child filter and other choices: pills, the chosen one filled with ink */
+.tabs{background:none;padding:0;gap:8px}
+.tabs button{border-radius:999px;border-color:var(--border-strong);color:var(--foreground);font-weight:500;font-size:13.5px;padding:8px 16px;min-height:36px}
+.tabs button:hover{border-color:var(--foreground)}
+.tabs button[aria-pressed="true"]{background:var(--primary);color:var(--primary-fg);border-color:var(--primary);box-shadow:none}
+.seg{border-radius:999px;padding:3px}
+.seg button{border-radius:999px}
+.seg button[aria-checked="true"]{border-color:var(--border-strong)}
+/* tags and buttons: pills */
+.badge{border-radius:999px;font-weight:500;padding:4px 9px}
+.btn{border-radius:999px}
+/* list dots: small green dots */
+.kid ul li::before{width:5px;height:5px;border-radius:50%;background:var(--ok);top:.7em}
