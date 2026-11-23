@@ -799,6 +799,14 @@ h1{font-weight:400;font-size:clamp(36px,9vw,48px);line-height:1.04;letter-spacin
 @media (min-width:1024px){.g-week .rows{grid-template-columns:repeat(var(--wdays,5),minmax(0,1fr))}}
 /* headings outrank list items: days and item titles at 500 */
 .dname{font-weight:500}
+b,strong{font-weight:500}
+.weather b,.kid .meta b,.prow .pinfo b,.presence b,.shared-pick b{font-weight:500}
+/* the rest of the headings at 500 too: calendar day, settings title, staff label (like the section labels) */
+.cal-dh,.sheet-top .sheet-title,.sheet-title{font-weight:500}
+.con-k{font-weight:500;font-size:11px;letter-spacing:.14em}
+/* contact card: title, child tag and the map button on one line */
+.con-top{flex-wrap:nowrap;align-items:center}
+.con-top .con-t{flex:1 1 auto;flex-basis:auto;min-width:0;margin:0}
 .events .title,.list .title,.msgs .msg .title{font-weight:500}
 /* calendar buttons: quiet grey, and on a mouse only shown on hover or focus */
 .cal-ic{color:var(--muted-fg)}
@@ -1669,7 +1677,7 @@ function renderContacts(){
     const filled = rows || staff;
     // the source stays in the data (for checking runs) but isn't shown – the card only says when nothing is known yet
     const foot = filled ? "" : `<p class="src con-src">${t("cPending")}</p>`;
-    return `<section class="card flat con-card"><div class="card-h"><div class="con-top"><div class="con-tags">${kidTags(kids.join(" & "))}</div>${map}</div><h3 class="card-t con-t">${esc(title)}</h3>${sub ? `<p class="kid-sub">${esc(sub)}</p>` : ""}</div><div class="card-c">${rows ? `<dl class="con-rows">${rows}</dl>` : ""}${staff ? `<div class="con-staff">${staff}</div>` : ""}${foot}</div></section>`;
+    return `<section class="card flat con-card"><div class="card-h"><div class="con-top"><h3 class="card-t con-t"><span>${esc(title)}</span>${kidTags(kids.join(" & "))}</h3>${map}</div>${sub ? `<p class="kid-sub">${esc(sub)}</p>` : ""}</div><div class="card-c">${rows ? `<dl class="con-rows">${rows}</dl>` : ""}${staff ? `<div class="con-staff">${staff}</div>` : ""}${foot}</div></section>`;
   }).join("");
 }
 const MSG_OPEN = {};

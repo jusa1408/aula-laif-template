@@ -753,7 +753,7 @@ function renderContacts(){
     const filled = rows || staff;
     // the source stays in the data (for checking runs) but isn't shown – the card only says when nothing is known yet
     const foot = filled ? "" : `<p class="src con-src">${t("cPending")}</p>`;
-    return `<section class="card flat con-card"><div class="card-h"><div class="con-top"><div class="con-tags">${kidTags(kids.join(" & "))}</div>${map}</div><h3 class="card-t con-t">${esc(title)}</h3>${sub ? `<p class="kid-sub">${esc(sub)}</p>` : ""}</div><div class="card-c">${rows ? `<dl class="con-rows">${rows}</dl>` : ""}${staff ? `<div class="con-staff">${staff}</div>` : ""}${foot}</div></section>`;
+    return `<section class="card flat con-card"><div class="card-h"><div class="con-top"><h3 class="card-t con-t"><span>${esc(title)}</span>${kidTags(kids.join(" & "))}</h3>${map}</div>${sub ? `<p class="kid-sub">${esc(sub)}</p>` : ""}</div><div class="card-c">${rows ? `<dl class="con-rows">${rows}</dl>` : ""}${staff ? `<div class="con-staff">${staff}</div>` : ""}${foot}</div></section>`;
   }).join("");
 }
 const MSG_OPEN = {};
