@@ -1363,10 +1363,11 @@ function renderWeek(){
   });
   $("w-days").innerHTML = days.map(d => `<article class="row${d.cls}"><div class="rlabel">${d.label}</div><div class="rbody">${d.body}</div></article>`).join("");
   // phones and tablets: each day folds; the summary shows who has what
-  $("w-acc").innerHTML = days.map(d => `<details class="wday${d.cls}" data-day="${d.iso}"${WEEK_OPEN.has(d.iso) ? " open" : ""}><summary><span class="wsum-day">${CHEV}${d.label}</span><ul class="wsum-items">${d.sum}</ul></summary><div class="rbody wday-body">${d.body}</div></details>`).join("");
+  $("w-acc").innerHTML = days.map(d => `<details class="wday${d.cls}" data-day="${d.iso}"${WEEK_SHUT.has(d.iso) ? "" : " open"}><summary><span class="wsum-day">${CHEV}${d.label}</span><ul class="wsum-items">${d.sum}</ul></summary><div class="rbody wday-body">${d.body}</div></details>`).join("");
 }
-const WEEK_OPEN = new Set();
-document.addEventListener("toggle", ev => { const d = ev.target; if(!d.classList || !d.classList.contains("wday")) return; d.open ? WEEK_OPEN.add(d.dataset.day) : WEEK_OPEN.delete(d.dataset.day); }, true);
+// days are open when the section is open (no expanding each day); a day closed by hand stays closed while the page is open
+const WEEK_SHUT = new Set();
+document.addEventListener("toggle", ev => { const d = ev.target; if(!d.classList || !d.classList.contains("wday")) return; d.open ? WEEK_SHUT.delete(d.dataset.day) : WEEK_SHUT.add(d.dataset.day); }, true);
 
 function weekSchool(iso,k){
   if(!isSchool(k)) return "";
