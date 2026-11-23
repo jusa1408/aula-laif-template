@@ -799,6 +799,12 @@ function renderContacts(){
 }
 const MSG_OPEN = {};
 const CHEV_DOWN = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>`;
+$("msg-items").addEventListener("click", ev => {
+  const b = ev.target.closest(".group-btn[data-msgw]"); if(!b) return;
+  const open = b.getAttribute("aria-expanded") !== "true";
+  MSG_OPEN[b.dataset.msgw] = open; b.setAttribute("aria-expanded", String(open));
+  const card = b.parentElement.nextElementSibling; if(card) card.hidden = !open;
+});
 function renderMsgs(){
   document.querySelector('#viewnav a[data-view="msgs"]').hidden = !IS_PARENT();
   $("set-open").hidden = !IS_PARENT();
@@ -825,13 +831,10 @@ function renderMsgs(){
     const range = g.w ? `${g.w===thisMon ? `${t("week")} ${isoWeek(g.w)} · ` : ""}${fmtShort(g.w)}–${fmtShort(addDays(g.w,6))}` : "";
     // each week folds; the newest is open, older ones closed – the choice holds while the page is open
     const open = MSG_OPEN[g.w] !== undefined ? MSG_OPEN[g.w] : i===0;
-    // phones drop the dates (the week number says it), so the line never wraps under the title
-    const wkNo = g.w && g.w===thisMon ? `${t("week")} ${isoWeek(g.w)} · ` : "";
-    const dates = g.w ? `<span class="msg-wk-dates">${esc(fmtShort(g.w))}–${esc(fmtShort(addDays(g.w,6)))} · </span>` : "";
-    return `<details class="card flat msg-card msg-wk" data-w="${esc(g.w)}"${open ? " open" : ""}><summary><span class="msg-wk-l">${CHEV_DOWN}<h3 class="card-t">${esc(title)}</h3></span><span class="msg-wk-r"><span class="card-d">${esc(wkNo)}${dates}${esc(t("nMsgs")(g.list.length))}</span></span></summary><div class="card-c"><ul class="list msgs">${g.list.map(row).join("")}</ul></div></details>`;
+    // built like the overview: a section header that folds (chevron + label + line), then the week's card
+    return `<div class="group msg-grp"><button type="button" class="group-btn" data-msgw="${esc(g.w)}" aria-expanded="${open}">${CHEV_DOWN}<span>${esc(title)} · ${esc(t("nMsgs")(g.list.length))}</span></button></div><section class="card flat msg-card"${open ? "" : " hidden"}><div class="card-h"><h3 class="card-t">${esc(title)}</h3><p class="card-d date">${esc(range)}</p></div><div class="card-c"><ul class="list msgs">${g.list.map(row).join("")}</ul></div></section>`;
   }).join("")
     : `<section class="card flat msg-card"><div class="card-c"><p class="empty">${t("noMsgs")}</p></div></section>`;
-  document.querySelectorAll("#msg-items details.msg-wk").forEach(d => d.addEventListener("toggle", () => { MSG_OPEN[d.dataset.w] = d.open; }));
   setView(VIEW);
 }
 // ---------- calendar: month (default) and year, like a wall calendar ----------
@@ -947,13 +950,13 @@ let COLL = {};
 let COLL_DEFAULT = {plan:true, ref:true, week: !(window.matchMedia && matchMedia("(min-width:1024px)").matches)};
 try { const c = localStorage.getItem("aula-groups2"); COLL = c ? (JSON.parse(c) || {}) : {...COLL_DEFAULT}; } catch { COLL = {...COLL_DEFAULT}; }
 function applyGroups(){
-  document.querySelectorAll(".group-btn").forEach(b => {
+  document.querySelectorAll(".group-btn[data-group]").forEach(b => {
     const c = !!COLL[b.dataset.group];
     b.setAttribute("aria-expanded", String(!c));
     GROUPS[b.dataset.group].forEach(sel => document.querySelector(sel).classList.toggle("gc", c));
   });
 }
-document.querySelectorAll(".group-btn").forEach(b => b.addEventListener("click", () => {
+document.querySelectorAll(".group-btn[data-group]").forEach(b => b.addEventListener("click", () => {
   COLL[b.dataset.group] = !COLL[b.dataset.group];
   try { localStorage.setItem("aula-groups2", JSON.stringify(COLL)); } catch {}
   applyGroups();

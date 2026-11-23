@@ -427,18 +427,10 @@ dialog#set-dlg.sheet{padding-top:0}
 .msg-weeks{display:grid;gap:16px}
 .g-msgs{display:grid;gap:12px;min-width:0}
 .msg-card .card-c{padding-top:24px}
-/* each week of messages folds: title left, dates + count and a chevron right */
-details.msg-wk > summary{align-items:center;gap:6px 12px;flex-wrap:wrap;padding:18px 20px}
-details.msg-wk[open] > summary{padding-bottom:0}
-.msg-wk-l{display:inline-flex;align-items:center;gap:8px;flex:1 1 auto;min-width:0}
-/* same fold signal as the section headers (This week / Plan ahead): chevron left, pointing down when open, right when closed */
-details.msg-wk > summary .msg-wk-l svg{flex:none;color:var(--muted-fg);transform:rotate(-90deg);transition:transform .15s}
-details.msg-wk[open] > summary .msg-wk-l svg{transform:none}
-@media (prefers-reduced-motion:reduce){details.msg-wk > summary .msg-wk-l svg{transition:none}}
-.msg-wk-r{display:inline-flex;align-items:center;gap:10px;margin-left:auto;min-width:0}
-.msg-wk-r .card-d{margin:0;font-variant-numeric:tabular-nums;text-align:right}
-@media (hover:hover){details.msg-wk > summary:hover .card-t{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}}
-@media (max-width:520px){details.msg-wk > summary{padding:16px;flex-wrap:nowrap}details.msg-wk[open] > summary{padding-bottom:0}.msg-wk-dates{display:none}}
+/* messages: each week has a section header that folds, like the overview's sections */
+.msg-weeks .group.msg-grp{margin:10px 2px -4px}
+.msg-weeks .group.msg-grp:first-child{margin-top:0}
+.msg-weeks .msg-card[hidden]{display:none}
 .msgs .msg{padding-block:16px}
 .msgs .msg:first-child{padding-top:0}
 .msgs .msg:last-child{padding-bottom:0}
