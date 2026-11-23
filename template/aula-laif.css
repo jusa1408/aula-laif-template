@@ -319,7 +319,6 @@ dialog#set-dlg.sheet{padding-top:0}
 .msgs .msg-sum{color:var(--foreground);font-size:14px}
 /* messages: one column at every width – week header, then mail-like rows */
 .list.msgs li{display:block}
-.msg-intro{margin:0 2px}
 .g-contact{display:grid;gap:12px;min-width:0}
 /* ---------- calendar ---------- */
 .cal-card .card-h{align-items:center;row-gap:16px}
@@ -421,8 +420,6 @@ dialog#set-dlg.sheet{padding-top:0}
 .con-ppl{grid-template-columns:minmax(8rem,max-content) minmax(0,1fr);column-gap:16px}
 .con-ppl .con-row{display:contents}
 .con-ppl dt{white-space:nowrap}
-.msg-intro .card-d{display:flex;align-items:flex-start;gap:6px;margin:0;line-height:1.45}
-.msg-intro svg{flex:none;margin-top:3px}
 .msg-weeks{display:grid;gap:16px}
 .g-msgs{display:grid;gap:12px;min-width:0}
 .msg-card .card-c{padding-top:24px}
