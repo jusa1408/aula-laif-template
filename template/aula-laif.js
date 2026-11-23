@@ -47,7 +47,7 @@ const STR = {
       updated:"Updated",closes:"Closes",nothingSpecial:"Nothing planned.",normalDay:"Nothing planned.",weekend:"Weekend. Nothing from Aula.",
       noPickups:"No pick-ups set",noPickup:"No pick-up set",pickup:"Pick-up",planned:"Planned",lunch:"Lunch",afternoon:"Afternoon",
       lunchOf:k=>`${k}'s lunch`,droppedOff:"Dropped off",pickedUp:"Picked up",notYet:"not yet",done:"done",next:"Next",
-      pack:"Pack",kEvent:"Event",kTrip:"Trip",kTodo:"To do",nTodo:n=>`${n} to do`,nEvents:n=>n===1?"1 event":`${n} events`,nPack:n=>`${n} to pack`,readyFor:d=>`Ready for ${d}`,seeAll:n=>`All ${n} in the calendar`,newSince:n=>`${n} new since your last visit`,nothingToPack:"Nothing extra to pack.",cantTick:"Ticks need edit access to this page.",addCal:"Add to calendar",
+      pack:"Pack",kEvent:"Event",kTrip:"Trip",kTodo:"To do",nTodo:n=>`${n} to do`,nEvents:n=>n===1?"1 event":`${n} events`,nPack:n=>`${n} to pack`,seeAll:n=>`All ${n} in the calendar`,newSince:n=>`${n} new since your last visit`,nothingToPack:"Nothing extra to pack.",cantTick:"Ticks need edit access to this page.",addCal:"Add to calendar",
       isNew:"New",showMsg:"Show full message",nothingYet:"Nothing announced yet.",nothingElse:"Nothing else.",noMenu:"No menu yet.",noPlaces:"No places yet – they appear after the first update from Aula.",sbarShow:"Show",signIn:"Sign in to claude.ai to see the latest update.",firstRun:"Waiting for the first update from Aula – it takes a few minutes.",loadFail:"Couldn't load the update right now.",
       openAula:"Open Aula ↗",
       footer:list=>`Read from Aula${list?` at ${list}`:""}. Always check Aula itself if something looks off.`,and:"and",
@@ -60,7 +60,7 @@ const STR = {
       updated:"Opdateret",closes:"Lukker",nothingSpecial:"Intet planlagt.",normalDay:"Intet planlagt.",weekend:"Weekend. Intet fra Aula.",
       noPickups:"Ingen afhentning sat",noPickup:"Ingen afhentning sat",pickup:"Afhentning",planned:"Planlagt",lunch:"Frokost",afternoon:"Eftermiddag",
       lunchOf:k=>`${k}s frokost`,droppedOff:"Afleveret",pickedUp:"Hentet",notYet:"endnu ikke",done:"overstået",next:"Næste",
-      pack:"Pak",kEvent:"Aftale",kTrip:"Tur",kTodo:"Skal gøres",nTodo:n=>`${n} skal gøres`,nEvents:n=>n===1?"1 aftale":`${n} aftaler`,nPack:n=>`${n} skal pakkes`,readyFor:d=>`Klar til ${d}`,seeAll:n=>`Alle ${n} i kalenderen`,newSince:n=>`${n} nye siden sidst`,nothingToPack:"Intet ekstra at pakke.",cantTick:"Flueben kræver redigeringsadgang til siden.",addCal:"Tilføj til kalender",
+      pack:"Pak",kEvent:"Aftale",kTrip:"Tur",kTodo:"Skal gøres",nTodo:n=>`${n} skal gøres`,nEvents:n=>n===1?"1 aftale":`${n} aftaler`,nPack:n=>`${n} skal pakkes`,seeAll:n=>`Alle ${n} i kalenderen`,newSince:n=>`${n} nye siden sidst`,nothingToPack:"Intet ekstra at pakke.",cantTick:"Flueben kræver redigeringsadgang til siden.",addCal:"Tilføj til kalender",
       isNew:"Ny",showMsg:"Vis hele beskeden",nothingYet:"Intet annonceret endnu.",nothingElse:"Intet andet.",noMenu:"Ingen menu endnu.",noPlaces:"Ingen steder endnu – de kommer efter første opdatering fra Aula.",sbarShow:"Vis",signIn:"Log ind på claude.ai for at se seneste opdatering.",firstRun:"Venter på første opdatering fra Aula – det tager et par minutter.",loadFail:"Kunne ikke hente opdateringen lige nu.",
       openAula:"Åbn Aula ↗",
       footer:list=>`Læses fra Aula${list?` kl. ${list}`:""}. Tjek altid Aula selv, hvis noget ser forkert ud.`,and:"og",
@@ -257,12 +257,11 @@ function readyLine(iso){
   const todo = actionItems().filter(u => !DONE[doneId(u)] && u.date <= iso).length;
   const evs = eventsFor(iso).filter(e => shows(e.child) && evKind(e)!=="todo").length;
   const pk = D.packing && D.packing.date===iso ? shownKids().reduce((n,k) => n + (((D.packing.kids||{})[k])||[]).length, 0) : 0;
-  const day = NEXT_IS_TOMORROW ? t("tomorrow").toLowerCase() : wdName(iso).toLowerCase();
   const parts = [];
-  if(!todo && !pk) parts.push(`<span class="ok">${IC_DONE}${esc(t("readyFor")(day))}</span>`);
   if(todo) parts.push(`<span>${IC_TODO}<b>${esc(t("nTodo")(todo))}</b></span>`);
   if(evs) parts.push(`<span>${IC_EV}${esc(t("nEvents")(evs))}</span>`);
-  return `<div class="ready">${parts.join("")}</div>`;
+  // only when there is something to do – a quiet day says nothing
+  return todo ? `<div class="ready">${parts.join("")}</div>` : "";
 }
 // one line for the next school day: "Pack: [Paula] packed lunch, water bottle  [Billie] swimwear"; nothing when nobody needs anything
 function packAll(iso){

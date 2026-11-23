@@ -866,7 +866,7 @@ b,strong{font-weight:500}
 .kid .presence .step svg,.kid .meta .step.plan svg{display:none}
 .kid .meta:has(.step.plan){padding-left:38px}
 /* Tomorrow: one line answering "are we ready?" */
-.ready{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;font-size:13.5px;color:var(--muted-fg);margin:10px 0 0}
+.ready{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;font-size:13.5px;color:var(--muted-fg);margin:10px 0 8px}
 .ready span{display:inline-flex;align-items:center;gap:6px}
 .ready svg{flex:none}
 .ready b{color:var(--foreground);font-weight:500}
@@ -878,7 +878,7 @@ b,strong{font-weight:500}
 /* ===== Variant B: a small box per child – avatars for what happens, the day's frame in one grey footer ===== */
 .kind-t{display:none}
 .kid{gap:12px}
-.kfoot{display:flex;flex-wrap:wrap;gap:2px 14px;font-size:13px;color:var(--muted-fg)}
+.kfoot{display:grid;gap:4px;font-size:13px;color:var(--muted-fg)}
 .kfoot .meta.ic{display:block}
 .kfoot .meta.ic > svg{display:none}
 .kfoot .meta.ic .mi{display:inline-flex;gap:2px 10px}
@@ -889,6 +889,11 @@ b,strong{font-weight:500}
 .shared-lunch,.shared-pick{border-top:0;padding-top:0;margin-top:12px}
 
 /* child tags in the same muted tile as the avatars; the child's colour lives on as a small dot */
-.tags .badge.k0,.tags .badge.k1,.tags .badge.k2,.tags .badge.k3,.tags .badge.k4,.tags .badge.k5,.tags .badge.both{background:var(--muted);border-color:transparent;color:var(--foreground);display:inline-flex;align-items:center;gap:6px}
+/* tile = the soft surface of tags and avatars; a step lighter than the card in dark mode so it doesn't vanish */
+:root{--tile:#efebe3}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--tile:#2e2c28}}
+:root[data-theme="dark"]{--tile:#2e2c28}
+.kid li.it .ev-i:not(.todo){background:var(--tile)}
+.tags .badge.k0,.tags .badge.k1,.tags .badge.k2,.tags .badge.k3,.tags .badge.k4,.tags .badge.k5,.tags .badge.both{background:var(--tile);border-color:transparent;color:var(--foreground);display:inline-flex;align-items:center;gap:6px}
 .tags .badge.k0::before,.tags .badge.k1::before,.tags .badge.k2::before,.tags .badge.k3::before,.tags .badge.k4::before,.tags .badge.k5::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--dot)}
 .tags .badge.k0{--dot:#3d9a63}.tags .badge.k1{--dot:#2f86b0}.tags .badge.k2{--dot:#7b5cc9}.tags .badge.k3{--dot:#c4613f}.tags .badge.k4{--dot:#b8901f}.tags .badge.k5{--dot:#c4498a}
