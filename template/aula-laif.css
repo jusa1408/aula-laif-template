@@ -192,7 +192,8 @@ html:has(dialog.sheet[open]){overflow:hidden}
 .sline-name .sline-l .badge{font-size:14px;padding:6px 10px}
 .sline-name .sline-v{font-size:13px}
 .sline-field{display:grid;gap:6px;font-size:12px;color:var(--muted-fg);width:100%}
-.inp.sel,.inp.inp-r{width:auto;max-width:12rem;padding:6px 8px;font-size:14px}
+.inp.sel,.inp.inp-r{width:auto;max-width:12rem;font-size:14px}
+.inp.inp-r{padding:6px 8px}
 .sline-top{display:flex;align-items:center;gap:10px;min-height:36px}
 .sline-l{font-size:14px;font-weight:500}
 .sline-l{flex:none;white-space:nowrap}
@@ -203,7 +204,8 @@ html:has(dialog.sheet[open]){overflow:hidden}
 .sline-help{margin:0;font-size:12.5px;line-height:1.45;color:var(--muted-fg)}
 .sline-ed .ign,.sline-ed .ign-add{width:100%}
 .scard .srow-ro{margin:6px 0 0}
-select.inp{appearance:auto}
+select.inp{appearance:none;-webkit-appearance:none;height:32px;padding:0 30px 0 10px;line-height:30px;cursor:pointer;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 9px center}
+@media (hover:hover){select.inp:hover{border-color:var(--foreground)}}
 .srow + .srow{border-top:1px solid var(--border)}
 .srow > summary{list-style:none;display:flex;align-items:center;gap:10px;min-height:48px;padding:8px 12px;cursor:pointer}
 .srow > summary::-webkit-details-marker{display:none}
@@ -238,10 +240,22 @@ select.inp{appearance:auto}
 .sheet-top #set-close{margin:0 -8px 0 auto}
 @media (hover:hover){.sheet-top #set-close:hover{background:var(--muted)}}
 .sheet-title{margin:0}
+/* settings masthead: one sticky bar – back (on sub-pages), title, close – with a hairline under it */
+dialog#set-dlg.sheet{padding-top:0}
+.sheet-top{position:sticky;top:0;z-index:3;display:flex;align-items:center;gap:6px;min-height:56px;margin:0 -20px 20px;padding:calc(8px + env(safe-area-inset-top,0px)) 20px 8px;background:var(--card);border-bottom:1px solid var(--border)}
+.sheet-top .sheet-title{flex:1 1 auto;min-width:0;margin:0;font:600 17px/1.3 var(--font);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sheet-top .set-back{margin:0 0 0 -8px;width:36px;height:36px;padding:0;color:var(--foreground)}
+.sheet-top .set-back[hidden]{display:none}
+.sheet-top #set-close{margin:0 -8px 0 0;width:36px;height:36px}
+@media (hover:hover){.sheet-top .set-back:hover{background:var(--muted)}}
+.sheet-sub{margin:0 0 20px}
+#set-dlg.on-page #set-body{margin-top:0}
+#set-dlg.on-page .set-sec-sub{margin:0 0 16px}
+@media (min-width:1024px){dialog#set-dlg.sheet{padding-top:0}.sheet-top{margin:0 -28px 24px;padding:10px 28px;min-height:64px}.sheet-top .sheet-title{font-size:18px}}
 .sline-ib{flex:none;margin:0 -6px 0 0;color:var(--muted-fg)}
 @media (hover:hover){.sline-ib:hover{color:var(--foreground);background:var(--muted)}}
 .sline-ib.on{color:var(--primary-fg);background:var(--primary)}
-.sline-ib.on:hover{background:var(--primary);opacity:.9}
+.sline-ib.on:hover,.sline-ib.on:focus-visible{color:var(--primary-fg);background:var(--primary);opacity:.85}
 #set-dlg.on-page #set-body{margin-top:20px}
 #set-dlg.on-page .set-sec-sub{margin:-8px 0 16px}
 .set-back:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
@@ -413,6 +427,18 @@ select.inp{appearance:auto}
 .msg-weeks{display:grid;gap:16px}
 .g-msgs{display:grid;gap:12px;min-width:0}
 .msg-card .card-c{padding-top:24px}
+/* each week of messages folds: title left, dates + count and a chevron right */
+details.msg-wk > summary{align-items:center;gap:6px 12px;flex-wrap:wrap;padding:18px 20px}
+details.msg-wk[open] > summary{padding-bottom:0}
+.msg-wk-l{display:inline-flex;align-items:center;gap:8px;flex:1 1 auto;min-width:0}
+/* same fold signal as the section headers (This week / Plan ahead): chevron left, pointing down when open, right when closed */
+details.msg-wk > summary .msg-wk-l svg{flex:none;color:var(--muted-fg);transform:rotate(-90deg);transition:transform .15s}
+details.msg-wk[open] > summary .msg-wk-l svg{transform:none}
+@media (prefers-reduced-motion:reduce){details.msg-wk > summary .msg-wk-l svg{transition:none}}
+.msg-wk-r{display:inline-flex;align-items:center;gap:10px;margin-left:auto;min-width:0}
+.msg-wk-r .card-d{margin:0;font-variant-numeric:tabular-nums;text-align:right}
+@media (hover:hover){details.msg-wk > summary:hover .card-t{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}}
+@media (max-width:520px){details.msg-wk > summary{padding:16px;flex-wrap:nowrap}details.msg-wk[open] > summary{padding-bottom:0}.msg-wk-dates{display:none}}
 .msgs .msg{padding-block:16px}
 .msgs .msg:first-child{padding-top:0}
 .msgs .msg:last-child{padding-bottom:0}
