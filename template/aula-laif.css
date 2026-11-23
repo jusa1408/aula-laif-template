@@ -810,13 +810,85 @@ b,strong{font-weight:500}
 .a-next{font-weight:300;font-size:14px;color:var(--muted-fg);letter-spacing:0;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @media (max-width:520px){.a-next{flex-basis:100%;order:3}}
 /* one packing line for the next school day, under the weather */
-.pack-all{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:baseline;gap:6px 10px;font-size:14px;margin:12px 0 18px}
-.pack-all .pack-l{font-weight:500;grid-column:1;grid-row:1}
-.pack-all .pk{grid-column:2}
-.pack-all .pk{display:flex;align-items:baseline;gap:8px;min-width:0}
-.pack-all .pk .badge{flex:none}
+.pack-all{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:baseline;gap:8px 10px;font-size:14px;margin:14px 0 18px}
+/* "PACK" as a small label on its own line (like the item kinds), the children's rows under it with tags in one column */
+.pack-all .pack-l{grid-column:1/-1;margin-bottom:-2px}
+.pack-all .pk{display:contents}
+.pack-all .pk .badge{justify-self:start}
+.pack-all .pk.one > span{grid-column:1/-1}
 /* Further ahead: compact; the rest is in the calendar */
 .g-later .list li.l-more{display:block;border-top:1px solid var(--border);padding-top:14px}
 .g-later .l-more .btn{font-size:13px;padding:8px 14px;white-space:nowrap}
 /* list dots: small green dots */
 .kid ul li::before{width:5px;height:5px;border-radius:50%;background:var(--ok);top:.7em}
+/* each item says what kind it is (Event / Trip / To do), like a small label above the title – replaces the dot */
+.kid ul{gap:12px}
+.kid ul li{padding-left:0}
+.kid ul li::before{display:none}
+.ev-k{display:flex;align-items:center;gap:5px;font-size:10.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-fg);line-height:1.2;margin-bottom:3px}
+.ev-k svg{flex:none}
+.ev-k.todo{color:var(--accent)}
+.evhead .ev-k{margin:0 2px 0 4px}
+/* day-card items: icon + title (medium) on one line, detail under in small grey */
+.kid ul li .ev-t{display:flex;align-items:flex-start;gap:8px;font-weight:500}
+.kid ul li .ev-t > span:not(.ev-i):not(.badge){min-width:0}
+.ev-i{display:inline-flex;flex:none;color:var(--muted-fg);transform:translateY(.28em)}
+.ev-i.todo{color:var(--accent)}
+.list .title .ev-i,.events .title .ev-i{margin-right:7px;transform:translateY(.12em)}
+.kid ul li .ev-d{margin:2px 0 0 20px;font-size:14px;color:var(--muted-fg);font-weight:400}
+.kid ul{gap:10px}
+/* one icon column in a child's section: items, school, homework, lunch and drop-off/pick-up all start their text at 20px */
+.kid .meta.ic{display:grid;grid-template-columns:14px minmax(0,1fr);column-gap:6px;align-items:start}
+.kid .meta.ic > svg{margin-top:.18em;color:var(--muted-fg)}
+.kid .meta.ic .mi{display:flex;flex-wrap:wrap;gap:2px 12px;min-width:0}
+.kid .meta.ic.none .mi{font-size:15px;color:var(--muted-fg)}
+.kid ul li .ev-t{gap:6px}
+.ev-i{width:14px;justify-content:center}
+/* avatar column: items get a soft 28px tile with their icon; every other line in the section centres its icon in the same 28px column, so all text starts at 38px */
+.kid ul li.it{display:grid;grid-template-columns:28px minmax(0,1fr);column-gap:10px;align-items:start}
+.kid li.it .ev-i{width:28px;height:28px;border-radius:8px;background:var(--muted);color:var(--muted-fg);display:flex;align-items:center;justify-content:center;transform:none}
+.kid li.it .ev-i.todo{background:var(--act-bg);color:var(--accent)}
+.kid li.it .ev-i svg{width:14px;height:14px}
+.kid li.it .ev-t{display:flex;align-items:center;gap:8px;min-height:28px;font-weight:500}
+.kid li.it .ev-d{margin:0}
+.kid .meta.ic{grid-template-columns:28px minmax(0,1fr);column-gap:10px;align-items:start}
+.kid .meta.ic > svg{justify-self:center;margin:.2em 0 0}
+.kid .presence{flex-direction:column;align-items:flex-start;gap:8px}
+.kid .presence .step svg,.kid .meta .step.plan svg{margin-left:7px;margin-right:17px}
+.kid .presence .step .t{margin-left:4px}
+.kid .presence .step,.kid .meta .step.plan{gap:0}
+.kid .presence .step > span + span{margin-left:6px}
+/* rule: buttons are round, labels are square – tags share the avatars' soft corner */
+.badge{border-radius:6px}
+/* the icon column holds only avatars; the day's fixed lines are plain grey text at the same edge */
+.kid .meta.ic > svg{visibility:hidden}
+.kid .presence{flex-direction:row;flex-wrap:wrap;align-items:center;gap:4px 14px;padding-left:38px}
+.kid .presence .step svg,.kid .meta .step.plan svg{display:none}
+.kid .meta:has(.step.plan){padding-left:38px}
+/* Tomorrow: one line answering "are we ready?" */
+.ready{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;font-size:13.5px;color:var(--muted-fg);margin:10px 0 0}
+.ready span{display:inline-flex;align-items:center;gap:6px}
+.ready svg{flex:none}
+.ready b{color:var(--foreground);font-weight:500}
+.ready .ok{color:var(--ok);font-weight:500}
+.shared-lunch{display:flex;align-items:center;gap:6px 8px;flex-wrap:wrap;font-size:13px;color:var(--muted-fg);margin-top:18px;padding-top:16px;border-top:1px solid var(--border)}
+.shared-lunch + .shared-pick{margin-top:0;padding-top:8px;border-top:0}
+.calm-k{margin:0;font-size:14px;color:var(--muted-fg)}
+.ready svg{display:none}
+/* ===== Variant B: a small box per child – avatars for what happens, the day's frame in one grey footer ===== */
+.kind-t{display:none}
+.kid{gap:12px}
+.kfoot{display:flex;flex-wrap:wrap;gap:2px 14px;font-size:13px;color:var(--muted-fg)}
+.kfoot .meta.ic{display:block}
+.kfoot .meta.ic > svg{display:none}
+.kfoot .meta.ic .mi{display:inline-flex;gap:2px 10px}
+.kfoot .presence{padding-left:0;gap:2px 14px}
+.kfoot .meta:has(.step.plan){padding-left:0}
+.kfoot .meta,.kfoot .presence{font-size:13px}
+.calm-k{font-size:13.5px}
+.shared-lunch,.shared-pick{border-top:0;padding-top:0;margin-top:12px}
+
+/* child tags in the same muted tile as the avatars; the child's colour lives on as a small dot */
+.tags .badge.k0,.tags .badge.k1,.tags .badge.k2,.tags .badge.k3,.tags .badge.k4,.tags .badge.k5,.tags .badge.both{background:var(--muted);border-color:transparent;color:var(--foreground);display:inline-flex;align-items:center;gap:6px}
+.tags .badge.k0::before,.tags .badge.k1::before,.tags .badge.k2::before,.tags .badge.k3::before,.tags .badge.k4::before,.tags .badge.k5::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--dot)}
+.tags .badge.k0{--dot:#3d9a63}.tags .badge.k1{--dot:#2f86b0}.tags .badge.k2{--dot:#7b5cc9}.tags .badge.k3{--dot:#c4613f}.tags .badge.k4{--dot:#b8901f}.tags .badge.k5{--dot:#c4498a}

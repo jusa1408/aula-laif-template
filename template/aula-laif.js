@@ -47,7 +47,7 @@ const STR = {
       updated:"Updated",closes:"Closes",nothingSpecial:"Nothing planned.",normalDay:"Nothing planned.",weekend:"Weekend. Nothing from Aula.",
       noPickups:"No pick-ups set",noPickup:"No pick-up set",pickup:"Pick-up",planned:"Planned",lunch:"Lunch",afternoon:"Afternoon",
       lunchOf:k=>`${k}'s lunch`,droppedOff:"Dropped off",pickedUp:"Picked up",notYet:"not yet",done:"done",next:"Next",
-      pack:"Pack",seeAll:n=>`All ${n} in the calendar`,newSince:n=>`${n} new since your last visit`,nothingToPack:"Nothing extra to pack.",cantTick:"Ticks need edit access to this page.",addCal:"Add to calendar",
+      pack:"Pack",kEvent:"Event",kTrip:"Trip",kTodo:"To do",nTodo:n=>`${n} to do`,nEvents:n=>n===1?"1 event":`${n} events`,nPack:n=>`${n} to pack`,readyFor:d=>`Ready for ${d}`,seeAll:n=>`All ${n} in the calendar`,newSince:n=>`${n} new since your last visit`,nothingToPack:"Nothing extra to pack.",cantTick:"Ticks need edit access to this page.",addCal:"Add to calendar",
       isNew:"New",showMsg:"Show full message",nothingYet:"Nothing announced yet.",nothingElse:"Nothing else.",noMenu:"No menu yet.",noPlaces:"No places yet – they appear after the first update from Aula.",sbarShow:"Show",signIn:"Sign in to claude.ai to see the latest update.",firstRun:"Waiting for the first update from Aula – it takes a few minutes.",loadFail:"Couldn't load the update right now.",
       openAula:"Open Aula ↗",
       footer:list=>`Read from Aula${list?` at ${list}`:""}. Always check Aula itself if something looks off.`,and:"and",
@@ -60,7 +60,7 @@ const STR = {
       updated:"Opdateret",closes:"Lukker",nothingSpecial:"Intet planlagt.",normalDay:"Intet planlagt.",weekend:"Weekend. Intet fra Aula.",
       noPickups:"Ingen afhentning sat",noPickup:"Ingen afhentning sat",pickup:"Afhentning",planned:"Planlagt",lunch:"Frokost",afternoon:"Eftermiddag",
       lunchOf:k=>`${k}s frokost`,droppedOff:"Afleveret",pickedUp:"Hentet",notYet:"endnu ikke",done:"overstået",next:"Næste",
-      pack:"Pak",seeAll:n=>`Alle ${n} i kalenderen`,newSince:n=>`${n} nye siden sidst`,nothingToPack:"Intet ekstra at pakke.",cantTick:"Flueben kræver redigeringsadgang til siden.",addCal:"Tilføj til kalender",
+      pack:"Pak",kEvent:"Aftale",kTrip:"Tur",kTodo:"Skal gøres",nTodo:n=>`${n} skal gøres`,nEvents:n=>n===1?"1 aftale":`${n} aftaler`,nPack:n=>`${n} skal pakkes`,readyFor:d=>`Klar til ${d}`,seeAll:n=>`Alle ${n} i kalenderen`,newSince:n=>`${n} nye siden sidst`,nothingToPack:"Intet ekstra at pakke.",cantTick:"Flueben kræver redigeringsadgang til siden.",addCal:"Tilføj til kalender",
       isNew:"Ny",showMsg:"Vis hele beskeden",nothingYet:"Intet annonceret endnu.",nothingElse:"Intet andet.",noMenu:"Ingen menu endnu.",noPlaces:"Ingen steder endnu – de kommer efter første opdatering fra Aula.",sbarShow:"Vis",signIn:"Log ind på claude.ai for at se seneste opdatering.",firstRun:"Venter på første opdatering fra Aula – det tager et par minutter.",loadFail:"Kunne ikke hente opdateringen lige nu.",
       openAula:"Åbn Aula ↗",
       footer:list=>`Læses fra Aula${list?` kl. ${list}`:""}. Tjek altid Aula selv, hvis noget ser forkert ud.`,and:"og",
@@ -168,9 +168,9 @@ const listTx = (o,f) => (LANG==="da" && o[f+"_da"]) || o[f] || [];
 const schoolHours = sd => sd && (sd.start||sd.end) ? `${esc(sd.start||"–")}–${esc(sd.end||"–")}` : "";
 function schoolBlock(iso,k){
   const sd = schoolFor(iso,k); if(!sd) return "";
-  if(sd.off) return `<p class="calm">${esc(tx(sd,"off")===true ? t("noSchool") : (tx(sd,"off")||t("noSchool")))}</p>`;
+  if(sd.off) return icLine(IC_SCHOOL, esc(tx(sd,"off")===true ? t("noSchool") : (tx(sd,"off")||t("noSchool"))), "school");
   const L = listTx(sd,"lessons"), H = listTx(sd,"homework");
-  return `<div class="meta school"><span>${t("school")} <b>${schoolHours(sd)}</b></span>${L.length?`<span>${t("lessons")}: ${esc(L.join(", "))}</span>`:""}</div>${H.length?`<div class="meta"><span>${t("homework")}: <span class="hw">${esc(H.join("; "))}</span></span></div>`:""}`;
+  return icLine(IC_SCHOOL, `<span>${t("school")} <b>${schoolHours(sd)}</b></span>${L.length?`<span>${t("lessons")}: ${esc(L.join(", "))}</span>`:""}`, "school") + (H.length ? icLine(IC_PEN, `<span>${t("homework")}: <span class="hw">${esc(H.join("; "))}</span></span>`) : "");
 }
 const pickupFor = iso => ((D.pickups||{}).days||[]).find(d => d.date===iso);
 // a child's own menu (D.menus[name]) when the run has one per child, else the shared menu
@@ -231,8 +231,38 @@ function pickRows(iso){
 const weatherFor = iso => [].concat(D.weatherDays||[], D.weather ? [D.weather] : []).find(w => w && w.date===iso);
 const weatherHtml = w => !w ? "" : `<div class="weather">${w.rain?IC_RAIN:IC_SUN}<b>${esc(tx(w,"summary"))}</b>${(w.min!=null&&w.max!=null)?`<span>${esc(w.min)}–${esc(w.max)}°C</span>`:""}${w.rain?`<span>· ${t("packRain")}</span>`:""}</div>`;
 function renderWeather(){
-  $("t-weather").innerHTML = weatherHtml(weatherFor(TOMORROW));
+  $("t-weather").innerHTML = weatherHtml(weatherFor(TOMORROW)) + readyLine(TOMORROW);
   $("d-weather").innerHTML = weatherHtml(weatherFor(TODAY));
+}
+// what kind an item is: a trip from the trip plan, a to-do (same words as Action needed), else an event
+const IC_EV = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>`;
+const IC_TRIP = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 22V4a1 1 0 0 1 1-1h12l-2 4 2 4H5"/></svg>`;
+const IC_TODO = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="m8 12 3 3 5-6"/></svg>`;
+const IC_FOOD = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 2v20M4 2v6a3 3 0 0 0 6 0V2M17 22V2c-2 1.5-3 4-3 7v4h3"/></svg>`;
+const IC_SCHOOL = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V10l7-5 7 5v11M10 21v-5h4v5"/></svg>`;
+const IC_PEN = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3l4 4L8 20H4v-4L17 3Z"/></svg>`;
+const IC_NONE = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 12h12"/></svg>`;
+// a line in a child's section: a small icon in the shared icon column, then the text – so every line starts at the same edge
+const icLine = (ic, html, cls="") => `<div class="meta ic${cls ? " "+cls : ""}">${ic}<div class="mi">${html}</div></div>`;
+const IC_BAG = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 7h12l1 14H5L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>`;
+const TRIP_RE = /(?<!na)tur\b|turdag|udflugt|\btrip|outing|excursion/i;
+const evKind = e => e && e.label !== undefined ? "trip" : ACT_RE.test(e && e.title || "") ? "todo" : TRIP_RE.test(e && e.title || "") ? "trip" : "event";
+// just the icon, with the kind as its name (tooltip and screen readers) – used in front of a title
+const kindIcon = e => { const k = evKind(e), w = t(k==="trip" ? "kTrip" : k==="todo" ? "kTodo" : "kEvent"); return `<span class="ev-i ${k}" role="img" aria-label="${esc(w)}" title="${esc(w)}">${k==="trip" ? IC_TRIP : k==="todo" ? IC_TODO : IC_EV}</span>`; };
+// one item in a day card: icon + title on one line, the detail under it in small grey
+const kindWord = e => { const k = evKind(e); return k==="event" ? "" : `<span class="badge kind-t ${k}">${esc(t(k==="trip" ? "kTrip" : "kTodo"))}</span>`; };
+const dayItem = e => `<li class="it">${kindIcon(e)}<div class="it-c"><div class="ev-t"><span>${esc(e.title)}</span>${kindWord(e)}${newTag(e)}</div>${e.detail ? `<p class="ev-d">${esc(e.detail)}</p>` : ""}</div></li>`;
+// Tomorrow: "1 to do · 2 events · 3 to pack", or "Ready for tomorrow" when nothing is left to do or pack
+function readyLine(iso){
+  const todo = actionItems().filter(u => !DONE[doneId(u)] && u.date <= iso).length;
+  const evs = eventsFor(iso).filter(e => shows(e.child) && evKind(e)!=="todo").length;
+  const pk = D.packing && D.packing.date===iso ? shownKids().reduce((n,k) => n + (((D.packing.kids||{})[k])||[]).length, 0) : 0;
+  const day = NEXT_IS_TOMORROW ? t("tomorrow").toLowerCase() : wdName(iso).toLowerCase();
+  const parts = [];
+  if(!todo && !pk) parts.push(`<span class="ok">${IC_DONE}${esc(t("readyFor")(day))}</span>`);
+  if(todo) parts.push(`<span>${IC_TODO}<b>${esc(t("nTodo")(todo))}</b></span>`);
+  if(evs) parts.push(`<span>${IC_EV}${esc(t("nEvents")(evs))}</span>`);
+  return `<div class="ready">${parts.join("")}</div>`;
 }
 // one line for the next school day: "Pack: [Paula] packed lunch, water bottle  [Billie] swimwear"; nothing when nobody needs anything
 function packAll(iso){
@@ -240,7 +270,7 @@ function packAll(iso){
   const one = FILTER!=="all";
   const rows = shownKids().map(k => { const items = (LANG==="da" && pk.kids_da && pk.kids_da[k]) || (pk.kids||{})[k] || []; return items.length ? {k, list: items.map((it,i) => i ? String(it).charAt(0).toLowerCase()+String(it).slice(1) : String(it)).join(", ")} : null; }).filter(Boolean);
   if(!rows.length) return "";
-  return `<div class="pack-all"><span class="pack-l">${t("pack")}:</span>${rows.map(r => `<span class="pk">${one ? "" : kidTags(r.k)}<span>${esc(r.list)}</span></span>`).join("")}</div>`;
+  return `<div class="pack-all"><span class="pack-l ev-k">${IC_BAG}${esc(t("pack"))}</span>${rows.map(r => `<span class="pk${one ? " one" : ""}">${one ? "" : kidTags(r.k)}<span>${esc(r.list)}</span></span>`).join("")}</div>`;
 }
 
 // ---------- cards ----------
@@ -249,7 +279,7 @@ function renderCard(iso, p0){
   $(p0+"-day").textContent = fmtLong(iso) + (hoursFor(iso) ? " · " + hoursFor(iso) : "");
   if(wd===0 || wd===6){
     const evs = eventsFor(iso).filter(e => shows(e.child));
-    body.innerHTML = evs.length ? evs.map(e=>`<div class="kid">${kidTags(e.child)}<ul><li>${esc(e.title)}${e.detail?` — ${esc(e.detail)}`:""}</li></ul></div>`).join("") : `<p class="calm">${t("weekend")}</p>`;
+    body.innerHTML = evs.length ? evs.map(e=>`<div class="kid">${kidTags(e.child)}<ul>${dayItem(e)}</ul></div>`).join("") : `<p class="calm">${t("weekend")}</p>`;
     return;
   }
   // one child chosen: the child's type/group ("Nursery · Mælkebøtten") becomes the card's subtitle, right under the title
@@ -264,6 +294,8 @@ function renderCard(iso, p0){
   const sharedPick = pkKids.length>=2 && !!pickSig(pkKids[0]) && pkKids.every(k => pickSig(k)===pickSig(pkKids[0])) && !pkKids.some(k => (actualFor(iso,k)||{}).out);
   const sp = sharedPick ? pkOf(sk[0]) : null;
   const isToday = iso===TODAY;
+  const lunchTxt = k => { const m = eatsLunch(k) && menuFor(iso,k); return m ? ((LANG==="da"&&m.lunch_da)||m.lunch||[]).join(", ") : ""; };
+  const lk = sk.filter(k => lunchTxt(k)), sharedLunch = lk.length>=2 && lk.every(k => lunchTxt(k)===lunchTxt(lk[0]));
   body.innerHTML = (p0==="t" ? packAll(iso) : "") + sk.map(k => {
     const mine = evs.filter(e => kidsOf(e.child).includes(k));
     const pk = pkOf(k), act = actualFor(iso,k) || {};
@@ -275,12 +307,13 @@ function renderCard(iso, p0){
     // the plan, until the child is picked up
     const plan = showsPickup(k) && hasPlan(pk) && !sharedPick && !act.out ? `<div class="meta"><span class="step plan">${IC_PICK}${planHtml(pk)}</span></div>` : "";
     const m = eatsLunch(k) && menuFor(iso,k);
-    const lunch = m ? `<div class="meta"><span>${t("lunch")}: ${esc(((LANG==="da"&&m.lunch_da)||m.lunch||[]).join(", "))}</span></div>` : "";
+    const lunch = m && !sharedLunch ? icLine(IC_FOOD, `<span>${t("lunch")}: ${esc(lunchTxt(k))}</span>`) : "";
     const sch = isSchool(k) ? schoolBlock(iso,k) : "";
-    return `<div class="kid">${one ? "" : kidHead(k)}${sch}${mine.length
-      ? `<ul>${mine.map(e=>`<li>${esc(e.title)}${e.detail?` — ${esc(e.detail)}`:""} ${newTag(e)}</li>`).join("")}</ul>`
-      : (sch ? "" : `<p class="calm">${t("normalDay")}</p>`)}${lunch}${presence}${plan}</div>`;
-  }).join("") + (sp ? `<div class="shared-pick">${IC_PICK}${planHtml(sp)}${kidTags(pkKids.join(" & "))}</div>` : "");
+    const foot = sch + lunch + presence + plan;
+    return `<div class="kid">${one ? "" : kidHead(k)}${mine.length
+      ? `<ul>${mine.map(dayItem).join("")}</ul>`
+      : `<p class="calm-k">${esc(t("normalDay"))}</p>`}${foot ? `<div class="kfoot">${foot}</div>` : ""}</div>`;
+  }).join("") + (sharedLunch ? `<div class="shared-lunch"><span>${t("lunch")}: ${esc(lunchTxt(lk[0]))}</span>${kidTags(lk.join(" & "))}</div>` : "") + (sp ? `<div class="shared-pick">${IC_PICK}${planHtml(sp)}${kidTags(pkKids.join(" & "))}</div>` : "");
 }
 // weekends: no Today card – the next school day (Monday) becomes the main card
 const WEEKEND = dow===0 || dow===6;
@@ -318,7 +351,7 @@ function renderWeek(){
     const sum = groups.length ? groups.map(g => `<li>${kidTags(g.child)}<span>${esc(g.titles.join(" · "))}</span></li>`).join("") : `<li class="wsum-none">${t("nothingSpecial")}</li>`;
     const label = `<span class="dname" data-done="${t("done")}">${esc(fmtDay(iso))}</span>${tag}${hoursFor(iso)?`<span class="hours">${esc(hoursFor(iso))}</span>`:""}`;
     return {iso, cls, label, sum, body: `
-        ${evs.length ? `<ul class="events">${evs.map((e,i)=> e.quiet ? `<li class="quietkid${i ? " split" : ""}"><div class="evhead">${kidTags(e.child)}</div>${weekSchool(iso,e.child) || `<p class="quiet">${t("nothingSpecial")}</p>`}</li>` : `<li${i && kkey(e)!==kkey(evs[i-1]) ? ' class="split"' : ""}><div class="evhead">${kidTags(e.child)}${newTag(e)}${calBtn(e)}</div><p class="title">${esc(e.title)}</p>${e.detail?`<p class="detail">${esc(e.detail)}</p>`:""}${e.source?`<div class="evfoot"><small>${esc(e.source)}</small></div>`:""}${(kidsOf(e.child).length===1 && !evs.slice(0,i).some(x => !x.quiet && kkey(x)===kkey(e))) ? weekSchool(iso,kidsOf(e.child)[0]) : ""}</li>`).join("")}</ul>` : `<ul class="events"><li class="quietkid"><div class="evhead">${kidTags(FILTER==="all" ? "Both" : FILTER)}</div><p class="quiet">${t("nothingSpecial")}</p></li></ul>`}
+        ${evs.length ? `<ul class="events">${evs.map((e,i)=> e.quiet ? `<li class="quietkid${i ? " split" : ""}"><div class="evhead">${kidTags(e.child)}</div>${weekSchool(iso,e.child) || `<p class="quiet">${t("nothingSpecial")}</p>`}</li>` : `<li${i && kkey(e)!==kkey(evs[i-1]) ? ' class="split"' : ""}><div class="evhead">${kidTags(e.child)}${newTag(e)}${calBtn(e)}</div><p class="title">${kindIcon(e)}${esc(e.title)}</p>${e.detail?`<p class="detail">${esc(e.detail)}</p>`:""}${e.source?`<div class="evfoot"><small>${esc(e.source)}</small></div>`:""}${(kidsOf(e.child).length===1 && !evs.slice(0,i).some(x => !x.quiet && kkey(x)===kkey(e))) ? weekSchool(iso,kidsOf(e.child)[0]) : ""}</li>`).join("")}</ul>` : `<ul class="events"><li class="quietkid"><div class="evhead">${kidTags(FILTER==="all" ? "Both" : FILTER)}</div><p class="quiet">${t("nothingSpecial")}</p></li></ul>`}
         ${pickRows(iso)}`};
   });
   $("w-days").innerHTML = days.map(d => `<article class="row${d.cls}"><div class="rlabel">${d.label}</div><div class="rbody">${d.body}</div></article>`).join("");
@@ -482,6 +515,8 @@ function renderActions(){
   $("a-items").innerHTML = open.map(u => actLi(u,false)).join("") + recent.map(u => actLi(u,true)).join("")
     + (SHOW_DONE ? done.map(u => actLi(u,true)).join("") : "")
     + (done.length ? `<li class="act-foot"><button type="button" class="btn ghost" data-showdone="1">${SHOW_DONE ? t("hideDone") : t("showDone")(done.length)}</button></li>` : "");
+  // "Done" changes Tomorrow's ready line too
+  if(D.generatedAt) renderWeather();
 }
 document.addEventListener("click", async ev => {
   const b = ev.target.closest("[data-done],[data-undo],[data-showdone]"); if(!b) return;
