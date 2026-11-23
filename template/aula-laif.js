@@ -229,7 +229,18 @@ function pickRows(iso){
 
 // ---------- weather + packing (next school day) ----------
 const weatherFor = iso => [].concat(D.weatherDays||[], D.weather ? [D.weather] : []).find(w => w && w.date===iso);
-const weatherHtml = w => !w ? "" : `<div class="weather">${w.rain?IC_RAIN:IC_SUN}<b>${esc(tx(w,"summary"))}</b>${(w.min!=null&&w.max!=null)?`<span>${esc(w.min)}–${esc(w.max)}°C</span>`:""}${w.rain?`<span>· ${t("packRain")}</span>`:""}</div>`;
+// the icon follows the forecast text: rain (flag), snow, partly cloudy, cloudy, else sun
+const svgW = d => `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const IC_CLOUD = svgW(`<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>`);
+const IC_PCLOUD = svgW(`<path d="M12 2v2M4.93 4.93l1.41 1.41M20 12h2M19.07 4.93l-1.41 1.41M15.95 12.65a4 4 0 0 0-5.93-4.13"/><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z"/>`);
+const IC_SNOW = svgW(`<path d="M12 2v20M4.93 4.93l14.14 14.14M2 12h20M4.93 19.07 19.07 4.93"/>`);
+const weatherIcon = w => { const s = `${w.summary||""} ${w.summary_da||""}`.toLowerCase();
+  if(w.rain) return IC_RAIN;
+  if(/snow|sleet|sne|slud/.test(s) && !/chance|risk|risiko|mulig/.test(s)) return IC_SNOW;
+  if(/partly|clear spells|sunny intervals|delvis|let skyet|opklaring/.test(s)) return IC_PCLOUD;
+  if(/cloud|overcast|fog|grey|gray|skyet|overskyet|tåge|grå/.test(s)) return IC_CLOUD;
+  return IC_SUN; };
+const weatherHtml = w => !w ? "" : `<div class="weather">${weatherIcon(w)}<div class="wx"><b>${esc(tx(w,"summary"))}</b>${(w.min!=null&&w.max!=null)?` <span class="wt">${esc(w.min)}–${esc(w.max)}°C</span>`:""}${w.rain?` <span>· ${t("packRain")}</span>`:""}</div></div>`;
 function renderWeather(){
   $("t-weather").innerHTML = weatherHtml(weatherFor(TOMORROW)) + readyLine(TOMORROW);
   $("d-weather").innerHTML = weatherHtml(weatherFor(TODAY));

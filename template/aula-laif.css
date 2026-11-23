@@ -784,7 +784,10 @@ h1{font-weight:400;font-size:clamp(36px,9vw,48px);line-height:1.04;letter-spacin
 /* one typeface: dates and times in Geist with even-width numbers (no code font) */
 :root{--mono:var(--font)}
 /* weather and pick-up are plain lines, not filled boxes */
-.weather{background:none;border:0;padding:0 0 2px;border-radius:0}
+.weather{background:none;border:0;padding:0 0 2px;border-radius:0;display:grid;grid-template-columns:16px minmax(0,1fr);column-gap:8px;align-items:start;flex-wrap:nowrap}
+.weather > svg{margin-top:.15em}
+.weather .wx{min-width:0}
+.weather .wt{white-space:nowrap;color:var(--muted-fg)}
 @media (min-width:1024px){.g-week .pick{background:none;border-radius:0;padding:12px 0 0;border-top:1px solid var(--border)}}
 /* section label carries the name; the card under it has no second title */
 .g-week .card-h,.g-later .card-h{display:none}
