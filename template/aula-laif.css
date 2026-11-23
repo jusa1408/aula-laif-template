@@ -778,5 +778,9 @@ h1{font-weight:400;font-size:clamp(36px,9vw,48px);line-height:1.04;letter-spacin
 /* tags and buttons: pills */
 .badge{border-radius:999px;font-weight:500;padding:4px 9px}
 .btn{border-radius:999px}
+/* Today and Tomorrow side by side: same title size and padding, so the headers line up */
+.card.raised .card-t{font-size:22px;letter-spacing:-.03em}
+.card.raised .card-h{padding:22px 24px 0}
+.card.raised .card-c{padding:16px 24px 22px}
 /* list dots: small green dots */
 .kid ul li::before{width:5px;height:5px;border-radius:50%;background:var(--ok);top:.7em}
