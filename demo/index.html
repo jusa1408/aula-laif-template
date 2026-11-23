@@ -76,8 +76,6 @@ header{display:grid;gap:0;margin-bottom:16px}
 .stamp::before{content:"·";margin-right:8px;color:var(--muted-fg)}
 h1{font:700 clamp(26px,6vw,32px)/1.15 var(--font);letter-spacing:-.025em;margin:0;text-wrap:balance}
 /* logo: "aula–laif" with the green tag as the hyphen */
-h1.wm{display:flex;align-items:center;letter-spacing:-.045em}
-.wm-p{display:inline-block;flex:none;width:.5em;height:.22em;border-radius:.11em;background:#7ad3a0;margin:.12em .1em 0}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .subtitle{color:var(--muted-fg);font-size:15px;margin-top:2px}
 .titles{margin-bottom:28px}
@@ -542,7 +540,6 @@ details.acc .acc-c b{font-weight:500;color:var(--muted-fg)}
 .list p{margin:0}
 .list .title{font-weight:600}
 .m-card .card-c,.g-week .card-c,.g-later .card-c{padding-top:24px}
-.m-weeks{flex:none}
 /* one lunch-menu card; with menus from several kitchens a switch under the title picks the institution */
 .g-menu{display:grid;min-width:0}
 .m-card .card-h{align-items:baseline}
@@ -574,7 +571,6 @@ details.acc .acc-c b{font-weight:500;color:var(--muted-fg)}
 /* Good to know is narrow on desktop too: always one meta line */
 #f-items li{grid-template-columns:1fr;gap:4px}
 #f-items .when-in{display:inline-flex}
-.m-tag{margin:10px 0 0}
 /* one child chosen: pick-up rows lose their tag column; empty tag lines collapse */
 .one-kid .prow{grid-template-columns:1fr}
 .one-kid .evhead:empty{display:none}
@@ -741,33 +737,6 @@ footer p.credit{order:9;margin-top:-8px}
   header{margin-bottom:12px}
   h1{font-size:36px}
 }
-/* week grid (desktop only) */
-.wgrid{display:none}
-@media (min-width:1024px){
-  .wgrid{display:none;grid-template-columns:10rem repeat(5,minmax(0,1fr))}
-  .wg-row{display:contents}
-  .wg-lab,.wg-day,.wg-cell{padding:14px 14px;border-top:1px solid var(--border);min-width:0}
-  .wg-head .wg-lab,.wg-head .wg-day{border-top:0;padding-top:0}
-  .wg-lab{padding-left:0;display:flex;flex-direction:column;align-items:flex-start;gap:6px}
-  .wg-day{display:flex;align-items:center;gap:6px 8px;flex-wrap:wrap}
-  .wg-day .dname{font-weight:600;font-size:14px}
-  .wg-day.is-past .dname{color:var(--muted-fg)}
-  .wg-cell{display:flex;flex-direction:column;gap:10px;border-left:1px solid var(--border)}
-  .wg-day{border-left:1px solid var(--border)}
-  .wg-cell.is-today,.wg-day.is-today{background:var(--muted)}
-  .wg-cell.is-past{opacity:.6}
-  .wg-ev{display:grid;gap:3px}
-  .wg-evh{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-height:24px}
-  .wg-evh .calmenu{margin-left:auto}
-  .wg-t{margin:0;font-weight:600;font-size:14px;line-height:1.35}
-  .wg-d{margin:0;font-size:13px;line-height:1.4;color:var(--muted-fg)}
-  .wg-s{margin:0;font-size:12.5px;line-height:1.4;color:var(--muted-fg)}
-  .wg-hw{color:var(--foreground)}
-  .wg-pick{margin:0;display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted-fg);padding-top:2px}
-  .wg-pick svg{flex:none}
-  .wg-pick b{color:var(--foreground);font-weight:600;font-variant-numeric:tabular-nums}
-  .wg-empty{color:var(--border);font-size:14px}
-}
 @media (prefers-reduced-motion:reduce){.icon-btn svg{transition:none}.group-btn svg{transition:none}details.acc summary svg,details.card > summary svg{transition:none}}
 </style>
 
@@ -808,7 +777,7 @@ footer p.credit{order:9;margin-top:-8px}
 
   <section class="card flat g-week" aria-labelledby="w-h">
     <div class="card-h"><h2 class="card-t" id="w-h">This week</h2><p class="card-d date" id="w-range"></p></div>
-    <div class="card-c"><div class="rows" id="w-days"><p class="empty">Nothing yet.</p></div><div class="wacc" id="w-acc"></div><div class="wgrid" id="w-grid" role="table"></div></div>
+    <div class="card-c"><div class="rows" id="w-days"><p class="empty">Nothing yet.</p></div><div class="wacc" id="w-acc"></div></div>
   </section>
 
   <div class="group"><button type="button" class="group-btn" data-group="plan" aria-expanded="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg><span data-i18n="planAhead">Plan ahead</span></button></div>
@@ -987,7 +956,7 @@ const shownKids = () => KIDS.filter(k => FILTER==="all" || FILTER===k);
 // ---------- state ----------
 try { localStorage.removeItem("aula-upd"); } catch {}
 const REPORT_DEMO = true;
-let D = {}, LOG = {}, CHECKS = {}, DB = null, DL = null, CAN_TICK = true, NEWSET = null;
+let D = {}, LOG = {}, DB = null, DL = null, NEWSET = null;
 
 // ---------- recurring trips (e.g. a "Storegruppe" plan) ----------
 // Data: D.trips = [{date, child, text, text_da, lunch, off, source}] – or the older D.storegruppe.trips (no child) for the child marked "trips".
@@ -1116,14 +1085,6 @@ function packList(iso,k){
   const list = items.map((it,i) => i ? String(it).charAt(0).toLowerCase()+String(it).slice(1) : String(it)).join(", ");
   return `<div class="pack-note"><span class="pack-l">${t("pack")}:</span> <span class="pack-items">${esc(list)}</span></div>`;
 }
-document.addEventListener("change", async ev => {
-  const c = ev.target.closest("[data-check]"); if(!c) return;
-  if(!DB){ CHECKS = {...CHECKS, [c.dataset.check]: c.checked}; renderCards(); return; }
-  const key = c.dataset.check, val = c.checked;
-  const next = {...CHECKS, [key]: val};
-  try { await DB.doc("checks/"+TOMORROW).set(next); CHECKS = next; }
-  catch(err){ c.checked = !val; CAN_TICK = false; renderCards(); }
-});
 
 // ---------- cards ----------
 function renderCard(iso, p0){
@@ -1174,38 +1135,6 @@ function renderCards(){
 }
 
 // ---------- week ----------
-// desktop: the week as a grid – a row per child (plus a shared row), a column per weekday
-function renderWeekGrid(){
-  const kids = shownKids();
-  const multi = e => kidsOf(e.child).length > 1;
-  const byDay = WEEK.map(iso => eventsFor(iso).filter(e => shows(e.child)));
-  const evsFor = iso => byDay[WEEK.indexOf(iso)];
-  const shared = WEEK.map(iso => evsFor(iso).filter(e => kids.length>1 && multi(e) && kidsOf(e.child).filter(k => kids.includes(k)).length>1));
-  const hasShared = shared.some(a => a.length);
-  const evHtml = (e, showTags) => `<div class="wg-ev">${showTags || calBtn(e) || isNew(e) ? `<div class="wg-evh">${showTags ? kidTags(e.child) : ""}${newTag(e)}${calBtn(e)}</div>` : ""}<p class="wg-t">${esc(e.title)}</p>${e.detail?`<p class="wg-d">${esc(e.detail)}</p>`:""}</div>`;
-  const pickChip = (iso,k) => {
-    const pd = pickupFor(iso), pk = pd && (pd.kids||[]).find(x => x.child===k); if(!pk || !(pk.out || pk.who || pk.note)) return "";
-    const name = String(tx(pk,"who")||"").replace(/^\s*(picked up by|hentes af)\s+/i, "");
-    return `<p class="wg-pick">${IC_PICK}<span>${pk.out ? `<b>${esc(pk.out)}</b>` : ""}${name ? ` · ${esc(name)}` : ""}${pk.note ? ` · ${esc(tx(pk,"note"))}` : ""}</span></p>`;
-  };
-  const schoolLine = (iso,k) => {
-    if(!isSchool(k)) return ""; const sd = schoolFor(iso,k); if(!sd) return "";
-    if(sd.off) return `<p class="wg-s">${t("noSchool")}</p>`;
-    const L = listTx(sd,"lessons"), H = listTx(sd,"homework");
-    return `<p class="wg-s">${schoolHours(sd)}${L.length?` · ${esc(L.join(", "))}`:""}</p>${H.length?`<p class="wg-s">${t("homework")}: <span class="wg-hw">${esc(H.join("; "))}</span></p>`:""}`;
-  };
-  const col = iso => iso===TODAY ? " is-today" : (iso<TODAY ? " is-past" : "");
-  let h = `<div class="wg-row wg-head" role="row"><div class="wg-lab" role="columnheader"></div>${WEEK.map(iso => `<div class="wg-day${col(iso)}" role="columnheader"><span class="dname">${esc(fmtDay(iso))}</span>${iso===TODAY?`<span class="badge solid">${t("today")}</span>`:""}${hoursFor(iso)?`<span class="hours">${esc(hoursFor(iso))}</span>`:""}</div>`).join("")}</div>`;
-  if(hasShared) h += `<div class="wg-row" role="row"><div class="wg-lab" role="rowheader">${kidTags(kids.join(" & "))}</div>${WEEK.map((iso,i) => `<div class="wg-cell${col(iso)}" role="cell">${shared[i].map(e => evHtml(e, kidsOf(e.child).filter(k=>kids.includes(k)).length < kids.length)).join("")}</div>`).join("")}</div>`;
-  h += kids.map(k => `<div class="wg-row" role="row"><div class="wg-lab" role="rowheader">${kidTags(k)}${typeLabel(k)?`<span class="kid-type">${esc(typeLabel(k))}</span>`:""}</div>${WEEK.map((iso,i) => {
-    const mine = evsFor(iso).filter(e => kidsOf(e.child).includes(k) && !shared[i].includes(e));
-    const lm = eatsLunch(k) && menuFor(iso,k);
-    const lunchG = lm ? `<p class="wg-s">${t("lunch")}: ${esc(((LANG==="da"&&lm.lunch_da)||lm.lunch||[]).join(", "))}</p>` : "";
-    const inner = mine.map(e => evHtml(e,false)).join("") + schoolLine(iso,k) + lunchG + pickChip(iso,k);
-    return `<div class="wg-cell${col(iso)}" role="cell">${inner || `<span class="wg-empty" aria-label="${esc(t("nothingSpecial"))}">–</span>`}</div>`;
-  }).join("")}</div>`).join("");
-  $("w-grid").innerHTML = h;
-}
 function renderWeek(){
   $("w-h").textContent = $("wk-group-l").textContent = showNext ? t("nextWeek") : t("thisWeek");
   $("w-range").textContent = `${t("week")} ${isoWeek(MON)} · ${fmtShort(MON)}–${fmtShort(FRI)}`;
@@ -1452,7 +1381,7 @@ const setPref = (k,v) => { try { localStorage.setItem("aula-"+k, v); } catch {} 
 const PREF = k => getPref(k)==="1";
 const START_VIEW = () => VIEWS[getPref("start")] ? getPref("start") : "overview";
 let MSGS = null, VIEW = (Object.entries(VIEWS).find(([k,v]) => v.hash && v.hash===location.hash)||[START_VIEW()])[0];
-let MSG_SEEN; let MSG_OK = false; // true when the database lets this viewer read messages/ (parents only)
+let MSG_OK = false; // true when the database lets this viewer read messages/ (parents only)
 const IS_PARENT = () => MSG_OK || !!MSGS;
 function setView(v){
   const ok = VIEWS[v] && (!VIEWS[v].parents || IS_PARENT());
@@ -1677,12 +1606,6 @@ function renderMsgs(){
   $("set-open").hidden = !IS_PARENT();
   if(!MSGS && !IS_PARENT()){ setView(VIEW); return; }
   const items = ((MSGS||{}).items||[]).filter(m => shows(m.child)).sort((a,b) => (b.date||"") < (a.date||"") ? -1 : 1);
-  // new since the last time this browser opened Messages
-  const mkey = m => `${m.date}|${m.subject}`;
-  // what was seen before this page load stays fixed, so "New" holds for the whole visit
-  if(MSG_SEEN===undefined){ MSG_SEEN = null; try { const v = localStorage.getItem("aula-msg-seen"); if(v) MSG_SEEN = new Set(JSON.parse(v)); } catch {} }
-  const seen = MSG_SEEN;
-  if(VIEW==="msgs" && MSGS){ try { localStorage.setItem("aula-msg-seen", JSON.stringify(((MSGS.items)||[]).map(mkey))); } catch {} }
   // "New" = from today or yesterday (same for every device and viewer)
   const isNewM = m => !!m.date && m.date >= addDays(TODAY,-1);
   // one card per week, built like the Next week card: title left ("This week" / "Week 42"), week + dates right

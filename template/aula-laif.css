@@ -69,8 +69,6 @@ header{display:grid;gap:0;margin-bottom:16px}
 .stamp::before{content:"·";margin-right:8px;color:var(--muted-fg)}
 h1{font:700 clamp(26px,6vw,32px)/1.15 var(--font);letter-spacing:-.025em;margin:0;text-wrap:balance}
 /* logo: "aula–laif" with the green tag as the hyphen */
-h1.wm{display:flex;align-items:center;letter-spacing:-.045em}
-.wm-p{display:inline-block;flex:none;width:.5em;height:.22em;border-radius:.11em;background:#7ad3a0;margin:.12em .1em 0}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .subtitle{color:var(--muted-fg);font-size:15px;margin-top:2px}
 .titles{margin-bottom:28px}
@@ -534,7 +532,6 @@ details.acc .acc-c b{font-weight:500;color:var(--muted-fg)}
 .list p{margin:0}
 .list .title{font-weight:600}
 .m-card .card-c,.g-week .card-c,.g-later .card-c{padding-top:24px}
-.m-weeks{flex:none}
 /* one lunch-menu card; with menus from several kitchens a switch under the title picks the institution */
 .g-menu{display:grid;min-width:0}
 .m-card .card-h{align-items:baseline}
@@ -566,7 +563,6 @@ details.acc .acc-c b{font-weight:500;color:var(--muted-fg)}
 /* Good to know is narrow on desktop too: always one meta line */
 #f-items li{grid-template-columns:1fr;gap:4px}
 #f-items .when-in{display:inline-flex}
-.m-tag{margin:10px 0 0}
 /* one child chosen: pick-up rows lose their tag column; empty tag lines collapse */
 .one-kid .prow{grid-template-columns:1fr}
 .one-kid .evhead:empty{display:none}
@@ -732,32 +728,5 @@ footer p.credit{order:9;margin-top:-8px}
   .titles{margin-bottom:32px}
   header{margin-bottom:12px}
   h1{font-size:36px}
-}
-/* week grid (desktop only) */
-.wgrid{display:none}
-@media (min-width:1024px){
-  .wgrid{display:none;grid-template-columns:10rem repeat(5,minmax(0,1fr))}
-  .wg-row{display:contents}
-  .wg-lab,.wg-day,.wg-cell{padding:14px 14px;border-top:1px solid var(--border);min-width:0}
-  .wg-head .wg-lab,.wg-head .wg-day{border-top:0;padding-top:0}
-  .wg-lab{padding-left:0;display:flex;flex-direction:column;align-items:flex-start;gap:6px}
-  .wg-day{display:flex;align-items:center;gap:6px 8px;flex-wrap:wrap}
-  .wg-day .dname{font-weight:600;font-size:14px}
-  .wg-day.is-past .dname{color:var(--muted-fg)}
-  .wg-cell{display:flex;flex-direction:column;gap:10px;border-left:1px solid var(--border)}
-  .wg-day{border-left:1px solid var(--border)}
-  .wg-cell.is-today,.wg-day.is-today{background:var(--muted)}
-  .wg-cell.is-past{opacity:.6}
-  .wg-ev{display:grid;gap:3px}
-  .wg-evh{display:flex;align-items:center;gap:6px;flex-wrap:wrap;min-height:24px}
-  .wg-evh .calmenu{margin-left:auto}
-  .wg-t{margin:0;font-weight:600;font-size:14px;line-height:1.35}
-  .wg-d{margin:0;font-size:13px;line-height:1.4;color:var(--muted-fg)}
-  .wg-s{margin:0;font-size:12.5px;line-height:1.4;color:var(--muted-fg)}
-  .wg-hw{color:var(--foreground)}
-  .wg-pick{margin:0;display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted-fg);padding-top:2px}
-  .wg-pick svg{flex:none}
-  .wg-pick b{color:var(--foreground);font-weight:600;font-variant-numeric:tabular-nums}
-  .wg-empty{color:var(--border);font-size:14px}
 }
 @media (prefers-reduced-motion:reduce){.icon-btn svg{transition:none}.group-btn svg{transition:none}details.acc summary svg,details.card > summary svg{transition:none}}
