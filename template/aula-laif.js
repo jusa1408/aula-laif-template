@@ -1,5 +1,5 @@
 // Aula-Laif page code. Markup first, then the app.
-document.body.insertAdjacentHTML("afterbegin", "<div class=\"sbar\" id=\"sbar\" aria-hidden=\"true\"><div class=\"sbar-in\"><span class=\"sbar-d\" id=\"sbar-d\"></span><div class=\"tabs sbar-tabs\" role=\"group\" id=\"sbar-tabs\"></div><label class=\"sbar-sel\" id=\"sbar-selw\"><select id=\"sbar-sel\"></select></label></div></div>\n<div class=\"wrap\" lang=\"en\" id=\"root\">\n  <header>\n    <div class=\"toprow\">\n      <div class=\"toprow-l\"><span class=\"weekno\" id=\"weekno\">Week</span>\n      <span class=\"stamp\" id=\"stamp\">Waiting for the next update\u2026</span></div>\n      <button type=\"button\" class=\"icon-btn corner-gear\" id=\"set-open\" aria-label=\"Settings\" title=\"Settings\" aria-haspopup=\"dialog\" hidden><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z\"/></svg></button>\n    </div>\n    <div class=\"titles-row\"><div class=\"titles\"><h1>Aula-Laif</h1><div class=\"subtitle\" id=\"subtitle\"></div></div></div>\n    <nav class=\"viewnav\" id=\"viewnav\" aria-label=\"Sections\"><a href=\"#\" data-view=\"overview\" aria-current=\"page\" data-i18n=\"overview\">Overview</a><a href=\"#beskeder\" data-view=\"msgs\" data-i18n=\"messages\" hidden>Messages</a><a href=\"#kalender\" data-view=\"cal\" data-i18n=\"calendar\">Calendar</a><a href=\"#kontakter\" data-view=\"contacts\" data-i18n=\"contacts\">Contacts</a></nav>\n    <div class=\"tabs\" role=\"group\" aria-label=\"Show\" id=\"tabs\">\n      <button type=\"button\" id=\"f-all\" data-k=\"all\" aria-pressed=\"true\">Both</button>\n    </div>\n  </header>\n\n  <div class=\"stale g-stale\" id=\"stale\" role=\"status\" hidden></div>\n\n  <section class=\"card flat g-act\" id=\"act-sec\" aria-labelledby=\"a-h\" hidden>\n    <div class=\"card-h\"><h2 class=\"card-t\" id=\"a-h\"><span data-i18n=\"actionNeeded\">Action needed</span><span class=\"badge outline\" id=\"a-count\" hidden></span></h2><button type=\"button\" class=\"icon-btn\" id=\"act-close\" aria-expanded=\"true\" aria-controls=\"a-body\" aria-label=\"Hide\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\"/></svg></button></div>\n    <div class=\"card-c\" id=\"a-body\"><ul class=\"list meta1\" id=\"a-items\"></ul></div>\n  </section>\n\n  <section class=\"card primary g-today\" id=\"today-sec\" aria-labelledby=\"d-h\">\n    <div class=\"card-h\"><h2 class=\"card-t\" id=\"d-h\" data-i18n=\"today\">Today</h2><p class=\"card-d date\" id=\"d-day\"></p><p class=\"kid-sub\" id=\"d-sub\" hidden></p></div>\n    <div class=\"card-c\"><div id=\"d-weather\"></div><div id=\"d-body\"><p class=\"calm\">Loading\u2026</p></div></div>\n  </section>\n\n  <section class=\"card raised g-next\" id=\"next-sec\" aria-labelledby=\"t-h\">\n    <div class=\"card-h\"><h2 class=\"card-t\" id=\"t-h\">Tomorrow</h2><p class=\"card-d date\" id=\"t-day\"></p><p class=\"kid-sub\" id=\"t-sub\" hidden></p></div>\n    <div class=\"card-c\"><div id=\"t-weather\"></div><div id=\"t-body\"><p class=\"calm\">The next update fills this in from Aula.</p></div></div>\n  </section>\n\n  <div class=\"group\"><button type=\"button\" class=\"group-btn\" data-group=\"week\" aria-expanded=\"true\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\"/></svg><span id=\"wk-group-l\">Next week</span></button></div>\n\n  <section class=\"card flat g-week\" aria-labelledby=\"w-h\">\n    <div class=\"card-h\"><h2 class=\"card-t\" id=\"w-h\">This week</h2><p class=\"card-d date\" id=\"w-range\"></p></div>\n    <div class=\"card-c\"><div class=\"rows\" id=\"w-days\"><p class=\"empty\">Nothing yet.</p></div><div class=\"wacc\" id=\"w-acc\"></div></div>\n  </section>\n\n  <div class=\"group\"><button type=\"button\" class=\"group-btn\" data-group=\"plan\" aria-expanded=\"true\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\"/></svg><span data-i18n=\"planAhead\">Plan ahead</span></button></div>\n\n  <section class=\"card flat g-later\" aria-labelledby=\"l-h\">\n    <div class=\"card-h\"><h2 class=\"card-t\" id=\"l-h\" data-i18n=\"furtherAhead\">Further ahead</h2><p class=\"card-d date\" id=\"l-range\"></p></div>\n    <div class=\"card-c\"><ul class=\"list meta1\" id=\"l-items\"><li><p class=\"empty\">Nothing announced yet.</p></li></ul></div>\n  </section>\n\n  <div class=\"group\"><button type=\"button\" class=\"group-btn\" data-group=\"ref\" aria-expanded=\"true\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\"/></svg><span data-i18n=\"forReference\">For reference</span></button></div>\n\n  <div class=\"g-menu\" id=\"m-wrap\"></div>\n\n  <section class=\"card flat g-fyi\" id=\"fyi-box\" aria-labelledby=\"f-h\">\n    <div class=\"card-h\"><h2 class=\"card-t\" id=\"f-h\" data-i18n=\"goodToKnow\">Good to know</h2></div>\n    <div class=\"card-c\"><ul class=\"list\" id=\"f-items\"><li><p class=\"empty\">Nothing else.</p></li></ul></div>\n  </section>\n\n  <section class=\"g-msgs\" id=\"msg-sec\" aria-label=\"Messages\" hidden>\n    <div class=\"msg-weeks\" id=\"msg-items\"></div>\n  </section>\n\n  <section class=\"card flat g-view cal-card\" id=\"cal-sec\" aria-labelledby=\"cal-h\" hidden>\n    <div class=\"card-h cal-head\"><h2 class=\"card-t cal-t\" id=\"cal-h\" aria-live=\"polite\"></h2><div class=\"cal-ctl\"><div class=\"seg\" id=\"cal-seg\"><button type=\"button\" data-calmode=\"month\"></button><button type=\"button\" data-calmode=\"year\"></button></div><div class=\"cal-nav\"><button type=\"button\" class=\"icon-btn\" data-calnav=\"-1\" id=\"cal-prev\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m15 18-6-6 6-6\"/></svg></button><button type=\"button\" class=\"btn\" data-calnav=\"0\" id=\"cal-today\"></button><button type=\"button\" class=\"icon-btn\" data-calnav=\"1\" id=\"cal-next\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m9 18 6-6-6-6\"/></svg></button></div></div></div>\n    <div class=\"card-c\" id=\"cal-body\"></div>\n  </section>\n\n  <section class=\"g-view g-contact\" id=\"contacts-sec\" aria-label=\"Contact\" hidden>\n    <div class=\"con-list\" id=\"con-items\"></div>\n  </section>\n\n  <dialog class=\"sheet\" id=\"set-dlg\" aria-labelledby=\"set-h\">\n    <div class=\"sheet-grab\" aria-hidden=\"true\"></div>\n    <div class=\"sheet-top\"><button type=\"button\" class=\"icon-btn set-back\" id=\"set-back\" hidden><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m15 18-6-6 6-6\"/></svg><span class=\"sr\">Settings</span></button><h2 class=\"sheet-title\" id=\"set-h\" data-i18n=\"settings\">Settings</h2><button type=\"button\" class=\"icon-btn\" id=\"set-close\" aria-label=\"Close\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"M6 6l12 12M18 6 6 18\"/></svg></button></div>\n    <p class=\"card-d sheet-sub\" data-i18n=\"setSub\">What the page knows about your family. To change something, ask Claude in the project.</p>\n    <div id=\"set-body\"></div>\n  </dialog>\n\n  <footer>\n    <div class=\"tools\">\n      <div class=\"lang\" role=\"group\" aria-label=\"Language\">\n        <button type=\"button\" id=\"l-en\" data-lang=\"en\" aria-pressed=\"true\">EN</button>\n        <button type=\"button\" id=\"l-da\" data-lang=\"da\" aria-pressed=\"false\">DA</button>\n      </div>\n    </div>\n    <form class=\"rep\" id=\"rep-form\" hidden>\n      <label for=\"rep-t\" data-i18n=\"repQ\">What looks wrong?</label>\n      <textarea id=\"rep-t\" rows=\"3\" maxlength=\"1000\"></textarea>\n      <div class=\"rep-row\"><button type=\"submit\" class=\"btn\" data-i18n=\"send\">Send</button><span id=\"rep-msg\" role=\"status\"></span></div>\n    </form>\n    <p class=\"disclaimer foot-note\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 11v5M12 8h.01\"/></svg><span id=\"foot-note-t\">Read from Aula. Always check Aula itself if something looks off.</span></p>\n    <button type=\"button\" class=\"btn ghost\" id=\"rep-btn\" aria-expanded=\"false\" aria-controls=\"rep-form\" data-i18n=\"report\">Report a problem</button>\n    <a class=\"btn\" href=\"https://www.aula.dk/portal/\" target=\"_blank\" rel=\"noopener\" id=\"open-aula\">Open Aula \u2197</a>\n    <p class=\"credit\" data-i18n=\"credit\">Made by Julie Pardoe</p>\n  </footer>\n</div>");
+document.body.insertAdjacentHTML("afterbegin", "<div class=\"sbar\" id=\"sbar\" aria-hidden=\"true\"><div class=\"sbar-in\"><span class=\"sbar-d\" id=\"sbar-d\"></span><div class=\"tabs sbar-tabs\" role=\"group\" id=\"sbar-tabs\"></div><label class=\"sbar-sel\" id=\"sbar-selw\"><select id=\"sbar-sel\"></select></label></div></div>\n<div class=\"wrap\" lang=\"en\" id=\"root\">\n  <header>\n    <div class=\"toprow\">\n      <div class=\"toprow-l\"><span class=\"weekno\" id=\"weekno\">Week</span>\n      <span class=\"stamp\" id=\"stamp\">Waiting for the next update\u2026</span></div>\n      <button type=\"button\" class=\"icon-btn corner-gear\" id=\"set-open\" aria-label=\"Settings\" title=\"Settings\" aria-haspopup=\"dialog\" hidden><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z\"/></svg></button>\n    </div>\n    <div class=\"titles-row\"><div class=\"titles\"><h1>Aula-Laif</h1><div class=\"subtitle\" id=\"subtitle\"></div></div></div>\n    <nav class=\"viewnav\" id=\"viewnav\" aria-label=\"Sections\"><a href=\"#\" data-view=\"overview\" aria-current=\"page\" data-i18n=\"overview\">Overview</a><a href=\"#beskeder\" data-view=\"msgs\" data-i18n=\"messages\" hidden>Messages</a><a href=\"#kalender\" data-view=\"cal\" data-i18n=\"calendar\">Calendar</a><a href=\"#kontakter\" data-view=\"contacts\" data-i18n=\"contacts\">Contacts</a></nav>\n    <div class=\"tabs\" role=\"group\" aria-label=\"Show\" id=\"tabs\">\n      <button type=\"button\" id=\"f-all\" data-k=\"all\" aria-pressed=\"true\">Both</button>\n    </div>\n  </header>\n\n  <div class=\"stale g-stale\" id=\"stale\" role=\"status\" hidden></div>\n\n  <section class=\"card flat g-act\" id=\"act-sec\" aria-labelledby=\"a-h\" hidden>\n    <div class=\"card-h\"><h2 class=\"card-t\" id=\"a-h\"><span data-i18n=\"actionNeeded\">Action needed</span><span class=\"badge outline\" id=\"a-count\" hidden></span></h2><button type=\"button\" class=\"icon-btn\" id=\"act-close\" aria-expanded=\"true\" aria-controls=\"a-body\" aria-label=\"Hide\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\"/></svg></button></div>\n    <div class=\"card-c\" id=\"a-body\"><ul class=\"list meta1\" id=\"a-items\"></ul></div>\n  </section>\n\n  <section class=\"card primary g-today\" id=\"today-sec\" aria-labelledby=\"d-h\">\n    <div class=\"card-h\"><h2 class=\"card-t\" id=\"d-h\" data-i18n=\"today\">Today</h2><p class=\"card-d date\" id=\"d-day\"></p><p class=\"kid-sub\" id=\"d-sub\" hidden></p></div>\n    <div class=\"card-c\"><div id=\"d-weather\"></div><div id=\"d-body\"><p class=\"calm\">Loading\u2026</p></div></div>\n  </section>\n\n  <section class=\"card raised g-next\" id=\"next-sec\" aria-labelledby=\"t-h\">\n    <div class=\"card-h\"><h2 class=\"card-t\" id=\"t-h\">Tomorrow</h2><p class=\"card-d date\" id=\"t-day\"></p><p class=\"kid-sub\" id=\"t-sub\" hidden></p></div>\n    <div class=\"card-c\"><div id=\"t-weather\"></div><div id=\"t-body\"><p class=\"calm\">The next update fills this in from Aula.</p></div></div>\n  </section>\n\n  <div class=\"group\"><button type=\"button\" class=\"group-btn\" data-group=\"week\" aria-expanded=\"true\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\"/></svg><span id=\"wk-group-l\">Next week</span></button></div>\n\n  <section class=\"card flat g-week\" aria-labelledby=\"w-h\">\n    <div class=\"card-h\"><h2 class=\"card-t\" id=\"w-h\">This week</h2><p class=\"card-d date\" id=\"w-range\"></p></div>\n    <div class=\"card-c\"><div class=\"rows\" id=\"w-days\"><p class=\"empty\">Nothing yet.</p></div><div class=\"wacc\" id=\"w-acc\"></div></div>\n  </section>\n\n  <div class=\"group\"><button type=\"button\" class=\"group-btn\" data-group=\"plan\" aria-expanded=\"true\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\"/></svg><span data-i18n=\"furtherAhead\">Further ahead</span></button></div>\n\n  <section class=\"card flat g-later\" aria-labelledby=\"l-h\">\n    <div class=\"card-h\"><h2 class=\"card-t\" id=\"l-h\" data-i18n=\"furtherAhead\">Further ahead</h2><p class=\"card-d date\" id=\"l-range\"></p></div>\n    <div class=\"card-c\"><ul class=\"list meta1\" id=\"l-items\"><li><p class=\"empty\">Nothing announced yet.</p></li></ul></div>\n  </section>\n\n  <div class=\"group\"><button type=\"button\" class=\"group-btn\" data-group=\"ref\" aria-expanded=\"true\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m6 9 6 6 6-6\"/></svg><span data-i18n=\"forReference\">For reference</span></button></div>\n\n  <div class=\"g-menu\" id=\"m-wrap\"></div>\n\n  <section class=\"card flat g-fyi\" id=\"fyi-box\" aria-labelledby=\"f-h\">\n    <div class=\"card-h\"><h2 class=\"card-t\" id=\"f-h\" data-i18n=\"goodToKnow\">Good to know</h2></div>\n    <div class=\"card-c\"><ul class=\"list\" id=\"f-items\"><li><p class=\"empty\">Nothing else.</p></li></ul></div>\n  </section>\n\n  <section class=\"g-msgs\" id=\"msg-sec\" aria-label=\"Messages\" hidden>\n    <div class=\"msg-weeks\" id=\"msg-items\"></div>\n  </section>\n\n  <section class=\"card flat g-view cal-card\" id=\"cal-sec\" aria-labelledby=\"cal-h\" hidden>\n    <div class=\"card-h cal-head\"><h2 class=\"card-t cal-t\" id=\"cal-h\" aria-live=\"polite\"></h2><div class=\"cal-ctl\"><div class=\"seg\" id=\"cal-seg\"><button type=\"button\" data-calmode=\"month\"></button><button type=\"button\" data-calmode=\"year\"></button></div><div class=\"cal-nav\"><button type=\"button\" class=\"icon-btn\" data-calnav=\"-1\" id=\"cal-prev\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m15 18-6-6 6-6\"/></svg></button><button type=\"button\" class=\"btn\" data-calnav=\"0\" id=\"cal-today\"></button><button type=\"button\" class=\"icon-btn\" data-calnav=\"1\" id=\"cal-next\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m9 18 6-6-6-6\"/></svg></button></div></div></div>\n    <div class=\"card-c\" id=\"cal-body\"></div>\n  </section>\n\n  <section class=\"g-view g-contact\" id=\"contacts-sec\" aria-label=\"Contact\" hidden>\n    <div class=\"con-list\" id=\"con-items\"></div>\n  </section>\n\n  <dialog class=\"sheet\" id=\"set-dlg\" aria-labelledby=\"set-h\">\n    <div class=\"sheet-grab\" aria-hidden=\"true\"></div>\n    <div class=\"sheet-top\"><button type=\"button\" class=\"icon-btn set-back\" id=\"set-back\" hidden><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"m15 18-6-6 6-6\"/></svg><span class=\"sr\">Settings</span></button><h2 class=\"sheet-title\" id=\"set-h\" data-i18n=\"settings\">Settings</h2><button type=\"button\" class=\"icon-btn\" id=\"set-close\" aria-label=\"Close\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" aria-hidden=\"true\"><path d=\"M6 6l12 12M18 6 6 18\"/></svg></button></div>\n    <p class=\"card-d sheet-sub\" data-i18n=\"setSub\">What the page knows about your family. To change something, ask Claude in the project.</p>\n    <div id=\"set-body\"></div>\n  </dialog>\n\n  <footer>\n    <div class=\"tools\">\n      <div class=\"lang\" role=\"group\" aria-label=\"Language\">\n        <button type=\"button\" id=\"l-en\" data-lang=\"en\" aria-pressed=\"true\">EN</button>\n        <button type=\"button\" id=\"l-da\" data-lang=\"da\" aria-pressed=\"false\">DA</button>\n      </div>\n    </div>\n    <form class=\"rep\" id=\"rep-form\" hidden>\n      <label for=\"rep-t\" data-i18n=\"repQ\">What looks wrong?</label>\n      <textarea id=\"rep-t\" rows=\"3\" maxlength=\"1000\"></textarea>\n      <div class=\"rep-row\"><button type=\"submit\" class=\"btn\" data-i18n=\"send\">Send</button><span id=\"rep-msg\" role=\"status\"></span></div>\n    </form>\n    <p class=\"disclaimer foot-note\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 11v5M12 8h.01\"/></svg><span id=\"foot-note-t\">Read from Aula. Always check Aula itself if something looks off.</span></p>\n    <button type=\"button\" class=\"btn ghost\" id=\"rep-btn\" aria-expanded=\"false\" aria-controls=\"rep-form\" data-i18n=\"report\">Report a problem</button>\n    <a class=\"btn\" href=\"https://www.aula.dk/portal/\" target=\"_blank\" rel=\"noopener\" id=\"open-aula\">Open Aula \u2197</a>\n    <p class=\"credit\" data-i18n=\"credit\">Made by Julie Pardoe</p>\n  </footer>\n</div>");
 
 // theme chosen in Settings (light / dark / system) – set before anything is drawn
 try { const th = localStorage.getItem("aula-theme"); if(th==="light" || th==="dark") document.documentElement.dataset.theme = th; } catch {}
@@ -47,7 +47,7 @@ const STR = {
       updated:"Updated",closes:"Closes",nothingSpecial:"Nothing planned.",normalDay:"Nothing planned.",weekend:"Weekend. Nothing from Aula.",
       noPickups:"No pick-ups set",noPickup:"No pick-up set",pickup:"Pick-up",planned:"Planned",lunch:"Lunch",afternoon:"Afternoon",
       lunchOf:k=>`${k}'s lunch`,droppedOff:"Dropped off",pickedUp:"Picked up",notYet:"not yet",done:"done",next:"Next",
-      pack:"Pack",nothingToPack:"Nothing extra to pack.",cantTick:"Ticks need edit access to this page.",addCal:"Add to calendar",
+      pack:"Pack",seeAll:n=>`All ${n} in the calendar`,newSince:n=>`${n} new since your last visit`,nothingToPack:"Nothing extra to pack.",cantTick:"Ticks need edit access to this page.",addCal:"Add to calendar",
       isNew:"New",showMsg:"Show full message",nothingYet:"Nothing announced yet.",nothingElse:"Nothing else.",noMenu:"No menu yet.",noPlaces:"No places yet – they appear after the first update from Aula.",sbarShow:"Show",signIn:"Sign in to claude.ai to see the latest update.",firstRun:"Waiting for the first update from Aula – it takes a few minutes.",loadFail:"Couldn't load the update right now.",
       openAula:"Open Aula ↗",
       footer:list=>`Read from Aula${list?` at ${list}`:""}. Always check Aula itself if something looks off.`,and:"and",
@@ -60,7 +60,7 @@ const STR = {
       updated:"Opdateret",closes:"Lukker",nothingSpecial:"Intet planlagt.",normalDay:"Intet planlagt.",weekend:"Weekend. Intet fra Aula.",
       noPickups:"Ingen afhentning sat",noPickup:"Ingen afhentning sat",pickup:"Afhentning",planned:"Planlagt",lunch:"Frokost",afternoon:"Eftermiddag",
       lunchOf:k=>`${k}s frokost`,droppedOff:"Afleveret",pickedUp:"Hentet",notYet:"endnu ikke",done:"overstået",next:"Næste",
-      pack:"Pak",nothingToPack:"Intet ekstra at pakke.",cantTick:"Flueben kræver redigeringsadgang til siden.",addCal:"Tilføj til kalender",
+      pack:"Pak",seeAll:n=>`Alle ${n} i kalenderen`,newSince:n=>`${n} nye siden sidst`,nothingToPack:"Intet ekstra at pakke.",cantTick:"Flueben kræver redigeringsadgang til siden.",addCal:"Tilføj til kalender",
       isNew:"Ny",showMsg:"Vis hele beskeden",nothingYet:"Intet annonceret endnu.",nothingElse:"Intet andet.",noMenu:"Ingen menu endnu.",noPlaces:"Ingen steder endnu – de kommer efter første opdatering fra Aula.",sbarShow:"Vis",signIn:"Log ind på claude.ai for at se seneste opdatering.",firstRun:"Venter på første opdatering fra Aula – det tager et par minutter.",loadFail:"Kunne ikke hente opdateringen lige nu.",
       openAula:"Åbn Aula ↗",
       footer:list=>`Læses fra Aula${list?` kl. ${list}`:""}. Tjek altid Aula selv, hvis noget ser forkert ud.`,and:"og",
@@ -212,7 +212,7 @@ function pickRows(iso){
   const p = pickupFor(iso), kids = shownKids().filter(showsPickup);
   if(!kids.length) return "";
   const nothing = kids.every(k => { const pk = p && (p.kids||[]).find(x => x.child===k); const a = actualFor(iso,k); return !(pk && (pk.in||pk.out||pk.who||pk.note)) && !(a && (a.in||a.out)); });
-  if(nothing) return `<div class="pick"><div>${t("noPickups")}</div></div>`;
+  if(nothing) return "";
   const sig = k => { const pk = p && (p.kids||[]).find(x => x.child===k) || {}; const a = actualFor(iso,k) || {}; return [pk.in,pk.out,pk.who,pk.note,a.in,a.out].join("|"); };
   const same = kids.length>=2 && kids.every(k => sig(k)===sig(kids[0]) && (kidOf(k).institution||"")===(kidOf(kids[0]).institution||""));
   return `<div class="pick"><div class="pick-l">${IC_PICK}${t("pickup")}</div>${(same ? [kids[0]] : kids).map(k => {
@@ -222,15 +222,9 @@ function pickRows(iso){
     const who = pk && pk.who ? whoHtml(pk) : "";
     const note = pk && pk.note ? `<span>${esc(tx(pk,"note"))}</span>` : "";
     const a = act && (act.in||act.out) ? `<span class="presence"><span class="step ${act.in?"done":"wait"}">${act.in?IC_DONE:IC_WAIT}<span class="t">${esc(act.in||"–")}</span></span><span class="step ${act.out?"done":"wait"}">${act.out?IC_DONE:IC_WAIT}<span class="t">${esc(act.out||"–")}</span></span></span>` : "";
-    const none = !plan && !who && !note && !a ? `<span>${t("noPickup")}</span>` : "";
-    return `<div class="prow">${same ? kidTags(kids.join(" & ")) : kidTags(k)}<div class="pinfo">${plan}${who}${note}${a}${none}</div></div>`;
+    if(!plan && !who && !note && !a) return "";
+    return `<div class="prow">${same ? kidTags(kids.join(" & ")) : kidTags(k)}<div class="pinfo">${plan}${who}${note}${a}</div></div>`;
   }).join("")}</div>`;
-}
-function lunchLine(iso,k){
-  if(!eatsLunch(k) || !(FILTER==="all" || FILTER===k)) return "";
-  const m = menuFor(iso,k); if(!m) return "";
-  const L = (LANG==="da" && m.lunch_da) || m.lunch || [], S = (LANG==="da" && m.snack_da) || m.snack || [];
-  return `<details class="acc"><summary>${CHEV}${esc(t("lunch"))}</summary><div class="acc-c"><div><b>${t("lunch")}</b> · ${esc(L.join(", "))}</div><div><b>${t("afternoon")}</b> · ${esc(S.join(", "))}</div>${m.note?`<div class="src">${esc(tx(m,"note"))}</div>`:""}</div></details>`;
 }
 
 // ---------- weather + packing (next school day) ----------
@@ -240,14 +234,13 @@ function renderWeather(){
   $("t-weather").innerHTML = weatherHtml(weatherFor(TOMORROW));
   $("d-weather").innerHTML = weatherHtml(weatherFor(TODAY));
 }
-function packList(iso,k){
+// one line for the next school day: "Pack: [Paula] packed lunch, water bottle  [Billie] swimwear"; nothing when nobody needs anything
+function packAll(iso){
   const pk = D.packing; if(!pk || pk.date!==iso) return "";
-  // "nothing extra to pack" only as a contrast: when no child shown has anything, say nothing at all
-  if(!shownKids().some(c => ((pk.kids||{})[c]||[]).length)) return "";
-  const items = (LANG==="da" && pk.kids_da && pk.kids_da[k]) || (pk.kids||{})[k] || [];
-  if(!items.length) return `<div class="pack-note"><span class="pack-l">${t("pack")}:</span> ${t("nothingToPack")}</div>`;
-  const list = items.map((it,i) => i ? String(it).charAt(0).toLowerCase()+String(it).slice(1) : String(it)).join(", ");
-  return `<div class="pack-note"><span class="pack-l">${t("pack")}:</span> <span class="pack-items">${esc(list)}</span></div>`;
+  const one = FILTER!=="all";
+  const rows = shownKids().map(k => { const items = (LANG==="da" && pk.kids_da && pk.kids_da[k]) || (pk.kids||{})[k] || []; return items.length ? {k, list: items.map((it,i) => i ? String(it).charAt(0).toLowerCase()+String(it).slice(1) : String(it)).join(", ")} : null; }).filter(Boolean);
+  if(!rows.length) return "";
+  return `<div class="pack-all"><span class="pack-l">${t("pack")}:</span>${rows.map(r => `<span class="pk">${one ? "" : kidTags(r.k)}<span>${esc(r.list)}</span></span>`).join("")}</div>`;
 }
 
 // ---------- cards ----------
@@ -271,7 +264,7 @@ function renderCard(iso, p0){
   const sharedPick = pkKids.length>=2 && !!pickSig(pkKids[0]) && pkKids.every(k => pickSig(k)===pickSig(pkKids[0])) && !pkKids.some(k => (actualFor(iso,k)||{}).out);
   const sp = sharedPick ? pkOf(sk[0]) : null;
   const isToday = iso===TODAY;
-  body.innerHTML = sk.map(k => {
+  body.innerHTML = (p0==="t" ? packAll(iso) : "") + sk.map(k => {
     const mine = evs.filter(e => kidsOf(e.child).includes(k));
     const pk = pkOf(k), act = actualFor(iso,k) || {};
     // Today: always both steps – "Dropped off: 08:12 / not yet" and "Picked up: 15:04 / not yet"
@@ -286,7 +279,7 @@ function renderCard(iso, p0){
     const sch = isSchool(k) ? schoolBlock(iso,k) : "";
     return `<div class="kid">${one ? "" : kidHead(k)}${sch}${mine.length
       ? `<ul>${mine.map(e=>`<li>${esc(e.title)}${e.detail?` — ${esc(e.detail)}`:""} ${newTag(e)}</li>`).join("")}</ul>`
-      : (sch ? "" : `<p class="calm">${t("normalDay")}</p>`)}${p0==="t"?packList(iso,k):""}${lunch}${presence}${plan}</div>`;
+      : (sch ? "" : `<p class="calm">${t("normalDay")}</p>`)}${lunch}${presence}${plan}</div>`;
   }).join("") + (sp ? `<div class="shared-pick">${IC_PICK}${planHtml(sp)}${kidTags(pkKids.join(" & "))}</div>` : "");
 }
 // weekends: no Today card – the next school day (Monday) becomes the main card
@@ -300,11 +293,16 @@ function renderCards(){
 
 // ---------- week ----------
 function renderWeek(){
-  $("w-h").textContent = $("wk-group-l").textContent = showNext ? t("nextWeek") : t("thisWeek");
+  $("w-h").textContent = showNext ? t("nextWeek") : t("thisWeek");
+  $("wk-group-l").textContent = `${showNext ? t("nextWeek") : t("thisWeek")} · ${t("week")} ${isoWeek(MON)}`;
+  // Today and the next school day have their own cards, so the week shows only the days after them
+  const SHOWN = WEEK.filter(iso => iso > TOMORROW);
+  document.querySelector(".g-week").hidden = document.querySelector('[data-group="week"]').closest(".group").hidden = !SHOWN.length;
+  $("w-days").style.setProperty("--wdays", Math.max(1, SHOWN.length));
   $("w-range").textContent = `${t("week")} ${isoWeek(MON)} · ${fmtShort(MON)}–${fmtShort(FRI)}`;
   const kkey = e => { const k = kidsOf(e.child); return k.length===KIDS.length ? "Both" : k[0]; };
   const ord = k => k==="Both" ? 9 : KIDS.indexOf(k);
-  const days = WEEK.map(iso => {
+  const days = SHOWN.map(iso => {
     const evs = eventsFor(iso).filter(e => shows(e.child));
     // when one child has plans and the other has none, say so for the other child
     const anySchool = shownKids().some(k => isSchool(k) && schoolFor(iso,k));
@@ -312,13 +310,6 @@ function renderWeek(){
       shownKids().forEach(k => { if(!evs.some(e => kidsOf(e.child).includes(k))) evs.push({child:k, quiet:true}); });
     }
     evs.sort((a,b) => ord(kkey(a)) - ord(kkey(b)));
-    // the lunch menu belongs to its child: put it in that child's last entry (else at the bottom, as before)
-    // each child's lunch goes in that child's last entry for the day
-    const lunchAt = {}, placed = [];
-    CONFIG.lunchKids.forEach(k => { const i = evs.map(e => !e.quiet || e.child===k ? kidsOf(e.child).includes(k) && (e.quiet || kidsOf(e.child).length < KIDS.length || KIDS.length===1) : false).lastIndexOf(true); if(i>=0){ (lunchAt[i] = lunchAt[i] || []).push(k); placed.push(k); } });
-    // a shared entry holding several children's lunch labels each one
-    const lunchIn = i => (lunchAt[i]||[]).map(k => lunchAt[i].length>1 ? lunchLine(iso,k).replace(`${CHEV}${esc(t("lunch"))}`, `${CHEV}${esc(t("lunchOf")(k))}`) : lunchLine(iso,k)).join("");
-    const lunchLeft = CONFIG.lunchKids.filter(k => !placed.includes(k));
     const cls = iso===TODAY ? " today" : (iso<TODAY ? " past" : "");
     const tag = iso===TODAY ? `<span class="badge outline">${t("today")}</span>` : "";
     // phones: a one-line summary per child for the folded day ("[Paula] Forest trip")
@@ -327,8 +318,7 @@ function renderWeek(){
     const sum = groups.length ? groups.map(g => `<li>${kidTags(g.child)}<span>${esc(g.titles.join(" · "))}</span></li>`).join("") : `<li class="wsum-none">${t("nothingSpecial")}</li>`;
     const label = `<span class="dname" data-done="${t("done")}">${esc(fmtDay(iso))}</span>${tag}${hoursFor(iso)?`<span class="hours">${esc(hoursFor(iso))}</span>`:""}`;
     return {iso, cls, label, sum, body: `
-        ${evs.length ? `<ul class="events">${evs.map((e,i)=> e.quiet ? `<li class="quietkid${i ? " split" : ""}"><div class="evhead">${kidTags(e.child)}</div>${weekSchool(iso,e.child) || `<p class="quiet">${t("nothingSpecial")}</p>`}${lunchIn(i)}</li>` : `<li${i && kkey(e)!==kkey(evs[i-1]) ? ' class="split"' : ""}><div class="evhead">${kidTags(e.child)}${newTag(e)}${calBtn(e)}</div><p class="title">${esc(e.title)}</p>${e.detail?`<p class="detail">${esc(e.detail)}</p>`:""}${e.source?`<div class="evfoot"><small>${esc(e.source)}</small></div>`:""}${(kidsOf(e.child).length===1 && !evs.slice(0,i).some(x => !x.quiet && kkey(x)===kkey(e))) ? weekSchool(iso,kidsOf(e.child)[0]) : ""}${lunchIn(i)}</li>`).join("")}</ul>` : `<ul class="events"><li class="quietkid"><div class="evhead">${kidTags(FILTER==="all" ? "Both" : FILTER)}</div><p class="quiet">${t("nothingSpecial")}</p></li></ul>`}
-        ${lunchLeft.map(k => { const l = lunchLine(iso,k); return l ? `<ul class="events"><li class="split"><div class="evhead">${kidTags(k)}</div>${l}</li></ul>` : ""; }).join("")}
+        ${evs.length ? `<ul class="events">${evs.map((e,i)=> e.quiet ? `<li class="quietkid${i ? " split" : ""}"><div class="evhead">${kidTags(e.child)}</div>${weekSchool(iso,e.child) || `<p class="quiet">${t("nothingSpecial")}</p>`}</li>` : `<li${i && kkey(e)!==kkey(evs[i-1]) ? ' class="split"' : ""}><div class="evhead">${kidTags(e.child)}${newTag(e)}${calBtn(e)}</div><p class="title">${esc(e.title)}</p>${e.detail?`<p class="detail">${esc(e.detail)}</p>`:""}${e.source?`<div class="evfoot"><small>${esc(e.source)}</small></div>`:""}${(kidsOf(e.child).length===1 && !evs.slice(0,i).some(x => !x.quiet && kkey(x)===kkey(e))) ? weekSchool(iso,kidsOf(e.child)[0]) : ""}</li>`).join("")}</ul>` : `<ul class="events"><li class="quietkid"><div class="evhead">${kidTags(FILTER==="all" ? "Both" : FILTER)}</div><p class="quiet">${t("nothingSpecial")}</p></li></ul>`}
         ${pickRows(iso)}`};
   });
   $("w-days").innerHTML = days.map(d => `<article class="row${d.cls}"><div class="rlabel">${d.label}</div><div class="rbody">${d.body}</div></article>`).join("");
@@ -357,10 +347,13 @@ function renderLater(){
   const wk = list.filter(u => u.date).map(u => isoWeek(u.date)), rg = $("l-range");
   rg.textContent = wk.length ? (Math.min(...wk)===Math.max(...wk) ? `${t("week")} ${wk[0]}` : `${t("weeks")} ${Math.min(...wk)}–${Math.max(...wk)}`) : "";
   rg.hidden = !wk.length;
-  $("l-items").innerHTML = list.length ? list.map(u=>{ const when = esc(u.date?fmtDay(u.date):(tx(u,"when")||"")); return `<li><span class="when">${when}</span><div><div class="evhead"><span class="when-in">${when}</span>${kidTags(u.child)}${newTag(u)}${calBtn(u)}</div><p class="title">${esc(u.title)}</p>${u.detail?`<p class="det">${esc(u.detail)}</p>`:""}${u.source?`<p class="src">${esc(u.source)}</p>`:""}</div></li>`; }).join("")
+  const dated = list.filter(u => u.date), shownL = [...dated.slice(0,3), ...list.filter(u => !u.date)];
+  $("l-items").innerHTML = list.length ? shownL.map(u=>{ const when = esc(u.date?fmtDay(u.date):(tx(u,"when")||"")); return `<li><span class="when">${when}</span><div><div class="evhead"><span class="when-in">${when}</span>${kidTags(u.child)}${newTag(u)}</div><p class="title">${esc(u.title)}</p></div></li>`; }).join("")
+      + (dated.length > 3 ? `<li class="l-more"><button type="button" class="btn" data-goto="cal">${esc(t("seeAll")(dated.length))} →</button></li>` : "")
     : `<li><p class="empty">${t("nothingYet")}</p></li>`;
 }
 
+document.addEventListener("click", ev => { const g = ev.target.closest("[data-goto]"); if(!g) return; setView(g.dataset.goto); try { history.replaceState(null, "", VIEWS[VIEW].hash || (location.pathname + location.search)); } catch {} window.scrollTo(0,0); });
 // ---------- menu + fyi ----------
 
 const monOf = iso => addDays(iso, -((dayDate(iso).getDay()||7)-1));
@@ -452,10 +445,13 @@ function dueIn(iso){ return Math.round((dayDate(iso) - dayDate(TODAY)) / 864e5);
 function dueLabel(n){ return n===0 ? t("dueToday") : n===1 ? t("dueTomorrow") : t("dueIn")(n); }
 // done-marks are shared (done/<id>), so the parents see the same
 let DONE = {}, SHOW_DONE = false, ACT_EXPANDED = false;
-try { ACT_EXPANDED = localStorage.getItem("aula-act-open") === "1"; } catch {}
+let ACT_CLOSED_DAY = null, ACT_URGENT = false;
+try { ACT_EXPANDED = localStorage.getItem("aula-act-open") === "1"; ACT_CLOSED_DAY = localStorage.getItem("aula-act-closed"); } catch {}
+// folded unless opened by hand – or something is due within 2 days and it wasn't closed by hand today
+const actFolded = () => !ACT_EXPANDED && !(ACT_URGENT && ACT_CLOSED_DAY !== TODAY);
 function toggleAct(){
-  ACT_EXPANDED = !ACT_EXPANDED;
-  try { localStorage.setItem("aula-act-open", ACT_EXPANDED ? "1" : "0"); } catch {}
+  if(actFolded()) ACT_EXPANDED = true; else { ACT_EXPANDED = false; ACT_CLOSED_DAY = TODAY; }
+  try { localStorage.setItem("aula-act-open", ACT_EXPANDED ? "1" : "0"); localStorage.setItem("aula-act-closed", ACT_CLOSED_DAY || ""); } catch {}
   renderActions();
 }
 $("act-close").addEventListener("click", ev => { ev.stopPropagation(); toggleAct(); });
@@ -473,7 +469,10 @@ function renderActions(){
   const all = actionItems(), open = all.filter(u => !DONE[doneId(u)]), recent = all.filter(u => DONE[doneId(u)] && doneToday(u)), done = all.filter(u => DONE[doneId(u)] && !doneToday(u));
   // the card disappears when everything is done, or when closed (until a new item turns up)
   // folded by default to just the title + count; the count turns black when something is due within 2 days
-  const folded = !ACT_EXPANDED, urgent = open.some(u => dueIn(u.date) <= 2);
+  const urgent = open.some(u => dueIn(u.date) <= 2); ACT_URGENT = urgent;
+  const folded = actFolded();
+  let nx = $("a-next"); if(!nx){ nx = document.createElement("span"); nx.id = "a-next"; nx.className = "a-next"; $("a-h").appendChild(nx); }
+  nx.textContent = folded && open.length ? `${tx(open[0],"title")} · ${dueLabel(dueIn(open[0].date)).toLowerCase()}` : "";
   $("act-sec").hidden = !open.length && !recent.length;
   $("act-sec").classList.toggle("collapsed", folded);
   $("a-body").hidden = folded;
@@ -782,11 +781,10 @@ function renderMsgs(){
   };
   $("msg-items").innerHTML = weeks.length ? weeks.map((g,i) => {
     const title = !g.w ? "" : g.w===thisMon ? t("thisWeekM") : `${t("week")} ${isoWeek(g.w)}`;
-    const range = g.w ? `${g.w===thisMon ? `${t("week")} ${isoWeek(g.w)} · ` : ""}${fmtShort(g.w)}–${fmtShort(addDays(g.w,6))}` : "";
     // each week folds; the newest is open, older ones closed – the choice holds while the page is open
     const open = MSG_OPEN[g.w] !== undefined ? MSG_OPEN[g.w] : i===0;
     // built like the overview: a section header that folds (chevron + label + line), then the week's card
-    return `<div class="group msg-grp"><button type="button" class="group-btn" data-msgw="${esc(g.w)}" aria-expanded="${open}">${CHEV_DOWN}<span>${esc(title)} · ${esc(t("nMsgs")(g.list.length))}</span></button></div><section class="card flat msg-card"${open ? "" : " hidden"}><div class="card-h"><h3 class="card-t">${esc(title)}</h3><p class="card-d date">${esc(range)}</p></div><div class="card-c"><ul class="list msgs">${g.list.map(row).join("")}</ul></div></section>`;
+    return `<div class="group msg-grp"><button type="button" class="group-btn" data-msgw="${esc(g.w)}" aria-expanded="${open}">${CHEV_DOWN}<span>${esc(title)} · ${esc(t("nMsgs")(g.list.length))}</span></button></div><section class="card flat msg-card"${open ? "" : " hidden"} aria-label="${esc(title)}"><div class="card-c"><ul class="list msgs">${g.list.map(row).join("")}</ul></div></section>`;
   }).join("")
     : `<section class="card flat msg-card"><div class="card-c"><p class="empty">${t("noMsgs")}</p></div></section>`;
   setView(VIEW);
@@ -891,7 +889,7 @@ document.addEventListener("click", ev => {
 });
 function renderAll(){
   applyStatic(); computeNew(); calN = 0;
-  if(D.generatedAt) $("stamp").textContent = `${t("updated")} ` + new Date(D.generatedAt).toLocaleString(LOC(),{weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit",timeZone:tz});
+  if(D.generatedAt) $("stamp").textContent = `${t("updated")} ` + new Date(D.generatedAt).toLocaleString(LOC(),{weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit",timeZone:tz}) + (NEWSET && NEWSET.size ? ` · ${t("newSince")(NEWSET.size)}` : "");
   renderStale(); renderActions(); renderCards(); renderWeek(); renderLater(); renderMenu(); renderFyi(); renderMsgs(); renderContacts(); renderCal();
 }
 
@@ -901,8 +899,8 @@ function renderAll(){
 const GROUPS = {week:[".g-week"], plan:[".g-later"], ref:["#m-wrap","#fyi-box"]};
 let COLL = {};
 // Plan ahead + For reference start collapsed; Next week too on phones (open on desktop, where it is five compact columns)
-let COLL_DEFAULT = {plan:true, ref:true, week: !(window.matchMedia && matchMedia("(min-width:1024px)").matches)};
-try { const c = localStorage.getItem("aula-groups2"); COLL = c ? (JSON.parse(c) || {}) : {...COLL_DEFAULT}; } catch { COLL = {...COLL_DEFAULT}; }
+let COLL_DEFAULT = {plan:false, ref:true, week: !(window.matchMedia && matchMedia("(min-width:1024px)").matches)};
+try { const c = localStorage.getItem("aula-groups3"); COLL = c ? (JSON.parse(c) || {}) : {...COLL_DEFAULT}; } catch { COLL = {...COLL_DEFAULT}; }
 function applyGroups(){
   document.querySelectorAll(".group-btn[data-group]").forEach(b => {
     const c = !!COLL[b.dataset.group];
@@ -912,7 +910,7 @@ function applyGroups(){
 }
 document.querySelectorAll(".group-btn[data-group]").forEach(b => b.addEventListener("click", () => {
   COLL[b.dataset.group] = !COLL[b.dataset.group];
-  try { localStorage.setItem("aula-groups2", JSON.stringify(COLL)); } catch {}
+  try { localStorage.setItem("aula-groups3", JSON.stringify(COLL)); } catch {}
   applyGroups();
 }));
 applyGroups();
