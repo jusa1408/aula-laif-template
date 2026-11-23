@@ -620,14 +620,8 @@ footer .foot-note svg{margin-top:1px;width:12px;height:12px}
 /* report a problem */
 .foot-end{order:6;flex-basis:100%;display:flex;justify-content:space-between;align-items:center;gap:8px 16px;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--border)}
 footer .foot-end p.credit{flex-basis:auto;order:0}
-.rep{order:7;flex-basis:100%;display:grid;gap:8px;grid-template-columns:minmax(0,30rem)}
-.rep label{font-size:13px;color:var(--foreground);font-weight:500}
-.rep textarea{font:14px/1.5 var(--font);padding:8px 10px;border:1px solid var(--input);border-radius:var(--r-sm);background:var(--card);color:var(--foreground);resize:vertical}
-.rep textarea:focus-visible{outline:2px solid var(--ring);outline-offset:1px}
-.rep-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px}
 .wrap:has(#fyi-box.gc) footer{border-top-color:transparent;margin-top:0}
-footer #rep-btn{margin-left:auto}
-footer #open-aula{margin-left:-14px}
+footer #open-aula{margin-left:auto}
 footer p.credit{order:9;margin-top:-8px}
 
 @media (max-width:520px){
@@ -992,13 +986,7 @@ b,strong{font-weight:500}
         <button type="button" id="l-da" data-lang="da" aria-pressed="false">DA</button>
       </div>
     </div>
-    <form class="rep" id="rep-form" hidden>
-      <label for="rep-t" data-i18n="repQ">What looks wrong?</label>
-      <textarea id="rep-t" rows="3" maxlength="1000"></textarea>
-      <div class="rep-row"><button type="submit" class="btn" data-i18n="send">Send</button><span id="rep-msg" role="status"></span></div>
-    </form>
     <p class="disclaimer foot-note"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span id="foot-note-t">Read from Aula. Always check Aula itself if something looks off.</span></p>
-    <button type="button" class="btn ghost" id="rep-btn" aria-expanded="false" aria-controls="rep-form" data-i18n="report">Report a problem</button>
     <a class="btn" href="https://www.aula.dk/portal/" target="_blank" rel="noopener" id="open-aula">Open Aula ↗</a>
     <p class="credit" data-i18n="credit">Made by Julie Pardoe</p>
   </footer>
@@ -1058,7 +1046,7 @@ const STR = {
       weather:"Weather",packRain:"pack rain gear",pickedUpBy:"Pick-up by",plannedPickup:"Planned pick-up",at:"at",
       actionNeeded:"Action needed",hideCard:"Hide",showCard:"Show",markDone:"Done",undo:"Undo",showDone:n=>`Show done (${n})`,hideDone:"Hide done",allDone:"All done.",dueToday:"Today",dueTomorrow:"Tomorrow",dueIn:n=>`In ${n} days`,
       staleMsg:(s,dev)=>`Not updated since ${s}. Is ${dev||"the computer"} on?`,
-      credit:"Made by Julie Pardoe",report:"Report a problem",repQ:"What looks wrong?",send:"Send",repThanks:"Thanks, sent.",repFail:"Couldn't send it. Try again later.",repEmpty:"Write a few words first.",repDemo:"Demo: nothing is sent."},
+      credit:"Made by Julie Pardoe"},
   da:{demoNote:"Demo med opdigtede data. Børn, institutioner og beskeder er fiktive.",overview:"Overblik",messages:"Beskeder",calendar:"Kalender",contacts:"Kontakt",nPlaces:n=>n===1?"1 sted":`${n} steder`,pOff:"Fra",pEveAt:h=>`Aften kl. ${h}`,secKids:"Børn",secContact:"Kontakt",secContactSub:"Ret det, der ikke passer. Det, du skriver her, vinder – aftentjekket ændrer det aldrig.",secPush:"Notifikationer",secPushSub:"Det, aftentjekket sender til din telefon.",secView:"Visning",secViewSub:"Hvordan siden ser ud og åbner. Kun på denne telefon eller computer – gemmes med det samme.",secFamily:"Indhold",secFamilySub:"Det, aftentjekket henter til siden.",vTheme:"Udseende",vThemeHelp:"Lys, mørk eller det samme som telefonen eller computeren.",thSystem:"System",thLight:"Lys",thDark:"Mørk",pEvening:"Aftenbesked",pEveningHelp:h=>`En push efter tjekket kl. ${h} om næste skoledag.`,pWeekly:"Ugebrev søndag",pWeeklyHelp:"Søndag aften: ugen, der kommer, i højst tre sætninger – i stedet for aftenbeskeden.",pContent:"Aftenbeskeden",pAll:"Alt",pPacking:"Kun pakkeliste",pContentHelp:"Alt: dagens særlige ting, pakkeliste og frister. Kun pakkeliste: kun det, der skal pakkes – eller ingen besked, hvis der intet er.",vStart:"Åbner på",vStartHelp:"Den fane, siden åbner på.",vWeeks:"Ugenumre",vHol:"Helligdage",vCalHelp:"I kalenderen.",cEdited:"Rettet",cFixHelp:"Lad feltet være tomt for at bruge det, aftentjekket finder.",calMonth:"Måned",calYear:"År",calPrevM:"Forrige måned",calNextM:"Næste måned",calPrevY:"Forrige år",calNextY:"Næste år",calMore:n=>`+${n} mere`,calCount:n=>n===1?"1 ting":`${n} ting`,calAllDay:"Hele dagen",calNothing:"Intet i kalenderen.",calDue:"Frist",cAddress:"Adresse",cPhone:"Telefon",cEmail:"E-mail",cHours:"Åbningstider",cSick:"Sygemelding",cMap:"Vis på kort",cStaff:"Personale",cFrom:"Fra",cPending:"Adresse, telefon og personale udfyldes fra Aula ved næste ugentlige tjek.",cNone:"Står ikke i Aula",settings:"Indstillinger",soon:"Kommer snart",calSub:"Hele måneden på én gang – begivenheder, ture og lukkedage.",conSub:"Der, hvor børnene går, fra Aula. Andre familiers oplysninger bliver i Aula.",soonText:"Siden er ikke bygget endnu. Indtil da viser \"Planlæg\" på overblikket, hvad der ligger længere ude.",soonText2:"Siden er ikke bygget endnu.",setSub:"Det, siden ved om jeres familie. Ret det, der ikke passer – næste kørsel fra Aula bruger det.",sKids:"Børn",childN:n=>`Barn ${n}`,sName:"Navn på siden",guessed:"ikke bekræftet",guessHelp:"Claude har gættet typen ud fra institutionens navn. Ret den, hvis den er forkert, eller tryk \"Det passer\".",nameHelp:full=>`Ændrer kun, hvordan navnet vises her. I Aula hedder barnet stadig ${full}.`,other:"Andet",sPick:"Hentning",shown:"Vises",hidden2:"Skjult",pickQ:"Vis aflevering og hentning",pickHelp:"Tider, hvem der henter, og hvornår barnet blev afleveret og hentet. Slå fra, hvis det ikke er vigtigt – fx et skolebarn, der selv går hjem.",colour:"Farve",edit:"Rediger",done2:"Færdig",lunchQ:"Får frokost fra køkkenet",lunchHelp:"Slå til, hvis institutionen serverer frokost. Så viser siden madplanen for barnet.",cityHelp:"Byen, vejrudsigten gælder for.",ignoreHelp:"Emner fra Aula, der ikke skal vises på siden – fx bleordning, hvis I ikke er med.",nTopics:n=>n===1?"1 emne":`${n} emner`,confirmIt:"Det passer",remove:"Fjern",add:"Tilføj",cityPh:"By til vejret",ignorePh:"fx opslag om bleordning",roNote:"Resten kommer fra Aula – bed Claude om at ændre det.",undoChanges:"Fortryd",save:"Gem",saved:"Gemt. Næste kørsel bruger det.",savedDemo:"Demo: ændringer gemmes ikke.",saveFail:"Kunne ikke gemme – det kræver redigeringsadgang til siden.",sFamily:"Familie",sType:"Type",sPlace:"Institution",sGroup:"Gruppe",sLunch:"Frokost",sTrips:"Ture",sCity:"Vejr",sRuns:"Læses fra Aula",sDevice:"på",sIgnore:"Skjul fra Aula",sLang:"Sprog",yes:"Ja",no:"Nej",confirm:"Bekræft?",none:"–",thisWeekM:"Denne uge",backTo:x=>`Tilbage til ${x}`,nMsgs:n=>n===1?"1 besked":`${n} beskeder`,lastWeekM:"Sidste uge",kind_message:"Besked",kind_post:"Opslag",noMsgs:"Ingen beskeder de seneste 14 dage.",openInAula:"Åbn i Aula ↗",both:"Begge",all:"Alle",type_nursery:"Vuggestue",type_kindergarten:"Børnehave",type_school:"Skole",type_sfo:"SFO",school:"Skole",homework:"Lektier",lessons:"Fag",noSchool:"Ingen skole.",today:"I dag",tomorrow:"I morgen",thisWeek:"Denne uge",nextWeek:"Næste uge",later:"Senere",furtherAhead:"De næste uger",
       planAhead:"Planlæg",forReference:"Til orientering",lunchMenu:"Frokostmenu",goodToKnow:"Godt at vide",week:"Uge",weeks:"Uge",
       updated:"Opdateret",closes:"Lukker",nothingSpecial:"Intet planlagt.",normalDay:"Intet planlagt.",weekend:"Weekend. Intet fra Aula.",
@@ -1071,7 +1059,7 @@ const STR = {
       weather:"Vejr",packRain:"pak regntøj",pickedUpBy:"Hentes af",plannedPickup:"Planlagt hentning kl.",at:"kl.",
       actionNeeded:"Kræver handling",hideCard:"Skjul",showCard:"Vis",markDone:"Klaret",undo:"Fortryd",showDone:n=>`Vis klarede (${n})`,hideDone:"Skjul klarede",allDone:"Alt er klaret.",dueToday:"I dag",dueTomorrow:"I morgen",dueIn:n=>`Om ${n} dage`,
       staleMsg:(s,dev)=>`Ikke opdateret siden ${s}. Er ${dev||"computeren"} tændt?`,
-      credit:"Lavet af Julie Pardoe",report:"Meld en fejl",repQ:"Hvad ser forkert ud?",send:"Send",repThanks:"Tak, sendt.",repFail:"Kunne ikke sende. Prøv igen senere.",repEmpty:"Skriv lidt først.",repDemo:"Demo: intet bliver sendt."}
+      credit:"Lavet af Julie Pardoe"}
 };
 // default follows the device language (Danish if the phone/computer is set to Danish, otherwise English); a choice made with EN/DA is remembered
 let LANG = (() => { try { const ls = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language||""]; return /^da\b/i.test(ls[0]||"") ? "da" : "en"; } catch { return "en"; } })();
@@ -1123,7 +1111,6 @@ const shownKids = () => KIDS.filter(k => FILTER==="all" || FILTER===k);
 
 // ---------- state ----------
 try { localStorage.removeItem("aula-upd"); } catch {}
-const REPORT_DEMO = true;
 let D = {}, LOG = {}, DB = null, DL = null, NEWSET = null;
 
 // ---------- recurring trips (e.g. a "Storegruppe" plan) ----------
@@ -1571,16 +1558,6 @@ function renderStale(){
   if(stale) el.innerHTML = `${IC_WARN}<span>${esc(t("staleMsg")(new Date(D.generatedAt).toLocaleString(LOC(),{weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit",timeZone:tz}), tx(PROFILE.device||{},"name")))}</span>`;
 }
 setInterval(renderStale, 5*60*1000);
-// ---------- report a problem ----------
-$("rep-btn").addEventListener("click", () => { const f = $("rep-form"), open = f.hidden; f.hidden = !open; $("rep-btn").setAttribute("aria-expanded", String(open)); if(open){ $("rep-msg").textContent = ""; $("rep-t").focus(); } });
-$("rep-form").addEventListener("submit", async ev => {
-  ev.preventDefault();
-  const text = $("rep-t").value.trim(), msg = $("rep-msg");
-  if(!text){ msg.textContent = t("repEmpty"); return; }
-  if(!DB){ msg.textContent = t(REPORT_DEMO ? "repDemo" : "repFail"); return; }
-  try { await DB.doc("reports/r"+Date.now()).set({text, at:new Date().toISOString(), lang:LANG, filter:FILTER, dataFrom:D.generatedAt||null}); $("rep-t").value = ""; msg.textContent = t("repThanks"); }
-  catch { msg.textContent = t("repFail"); }
-});
 
 // ---------- messages (own section; only readers allowed by the database rules ever get MSGS) ----------
 // views: the overview is the page; the others replace it. Messages and settings are for parents only.
